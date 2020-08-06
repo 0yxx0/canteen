@@ -57,4 +57,16 @@ public class BasicServlet extends HttpServlet{
 	     out.println(gson.toJson(obj));
 	     out.flush();
 	}
+	
+	protected void send(HttpServletResponse response, int code, String msg, Object obj) throws IOException {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("code", code);
+        map.put("msg", msg);
+        map.put("data", obj);
+        
+        Gson gson = new GsonBuilder().serializeNulls().create();
+        PrintWriter out = response.getWriter();
+        out.println(gson.toJson(map));
+        out.flush();
+	}
 }

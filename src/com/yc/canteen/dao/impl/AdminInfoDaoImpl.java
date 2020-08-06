@@ -15,7 +15,7 @@ public class AdminInfoDaoImpl implements IAdminInfoDao {
 
 	public int reg(AdminInfo af) {
 		DBHelper db = new DBHelper();
-		String sql="insert into admininfo values(0, ?, md5(?), ?)";
+		String sql="insert into admininfo values(0, ?, md5(?), ?, 1)";
 		return db.update(sql, af.getAname(), af.getPwd(), af.getTel());
 	}
 }

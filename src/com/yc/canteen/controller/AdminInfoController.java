@@ -30,15 +30,25 @@ public class AdminInfoController extends BasicServlet {
 			login(request,response);
 		}else if("reg".equals(op)) {
 			reg(request, response);
+		}else if("info".equals(op)) {
+			info(request, response);
 		}
 	}
 
-	
+	private void info(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		HttpSession session = request.getSession();
+		Object obj = session.getAttribute("CURRENTLOGINADMIN");
+		if(obj == null) {
+			this.send(response, 500, "", null);
+			return;
+		}
+		this.send(response, 200, "", obj);
+		
+	}
 
 	private void reg(HttpServletRequest request, HttpServletResponse response) throws IOException {
 	      AdminInfo af = RequestParamUtil.getParams(AdminInfo.class,request);
 	      
-	      System.out.println(af);
 	      IAdminInfoBiz adminInfoBiz = new AdminInfoBizImpl();
 		  this.send(response, adminInfoBiz.reg(af));
 	}
@@ -56,7 +66,7 @@ public class AdminInfoController extends BasicServlet {
 			this.send(response, 500);
 		}else {
 			HttpSession session = request.getSession();
-			session.setAttribute(SessionKey.CURRENTLOGINADMIN,af);
+			session.setAttribute("CURRENTLOGINADMIN",af);
 			this.send(response, 200);
 		}
 	}

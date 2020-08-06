@@ -11,6 +11,8 @@
 <script type="text/javascript" src="../../js/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="../../js/showpic.js"></script>
 <script type="text/javascript" src="../../js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="../../js/axios.js"></script>
+<script type="text/javascript" src="../../js/vue.js"></script>
 <script src="../../ckeditor/ckeditor.js"></script>
 </head>
 <body class="easyui-layout">
@@ -19,8 +21,8 @@
     	<div class="wu-header-left">
         	<h1>EasyUI Web Admin</h1>
         </div>
-        <div class="wu-header-right">
-        	<p><strong class="easyui-tooltip" title="2条未读消息">admin</strong>，欢迎您！</p>
+        <div class="wu-header-right" id="login_info" >
+        	<p><strong class="easyui-tooltip" title="2条未读消息">{{aname}}</strong>，欢迎您！</p>
             <p><a href="#">网站首页</a>|<a href="#">支持论坛</a>|<a href="#">帮助中心</a>|<a href="#">安全退出</a></p>
         </div>
     </div>
@@ -39,6 +41,9 @@
             <div title="管理中心" data-options="iconCls:'icon-user'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
                     <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="admin.html" iframe="0">添加管理员</a></li>
+                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="view_admin.html" iframe="0">管理员管理
+                    
+                    </a></li>
                 </ul>
             </div>
         </div>
@@ -58,6 +63,7 @@
     <!-- end of footer -->  
     <script type="text/javascript">
 		$(function(){
+			info();
 			$('.wu-side-tree a').bind("click",function(){
 				var title = $(this).text();
 				var url = $(this).attr('data-link');
@@ -66,7 +72,29 @@
 				addTab(title,url,iconCls,iframe);
 			});	
 		});
+		
+		let login = new Vue({
+			el: "#login_info",
+			data: {
+				aname: "",
+				status: 0
+			},
+			mounted:function(){
+				axios.get("../../admin", {params:{op:"info"}}).then(result=> {
+					if(result.data.code == 200){ //已登录
+						this.aname=  result.data.data.aname;
+					    this.status = result.data.data.status;
+					}  else{
+						this.aname = "wu";
+					}
+				})
+			}
+		})
 
+		
+		function info(){
+			return axios.get("../../admin", {params:{op:"info"}})
+		}
 		/**
 		* Name 选项卡初始化
 		*/
@@ -85,6 +113,7 @@
 		* Param title 名称
 		* Param href 链接
 		* Param iconCls 图标样式
+		
 		* Param iframe 链接跳转方式（true为iframe，false为href）
 		*/	
 		function addTab(title, href, iconCls, iframe){
