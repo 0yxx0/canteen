@@ -1,5 +1,7 @@
 package com.yc.canteen.biz.impl;
 
+import java.util.List;
+
 import com.yc.canteen.biz.IAdminInfoBiz;
 import com.yc.canteen.dao.IAdminInfoDao;
 import com.yc.canteen.dao.impl.AdminInfoDaoImpl;
@@ -24,6 +26,12 @@ public class AdminInfoBizImpl implements IAdminInfoBiz {
 			
 		   IAdminInfoDao adminInfoDao = new AdminInfoDaoImpl();
 		   return adminInfoDao.reg(af);
+	}
+	
+	@Override
+	public List<AdminInfo> find(AdminInfo af) {
+		 IAdminInfoDao adminInfoDao = new AdminInfoDaoImpl();
+		   return adminInfoDao.find(af);
 	}
 
 }

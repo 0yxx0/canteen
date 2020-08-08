@@ -22,7 +22,7 @@
         	<h1>EasyUI Web Admin</h1>
         </div>
         <div class="wu-header-right" id="login_info" >
-        	<p><strong class="easyui-tooltip" title="2条未读消息">{{aname}}</strong>，欢迎您！</p>
+        	<p>{{level}}<strong class="easyui-tooltip" title="2条未读消息">{{aname}}</strong>，欢迎您！</p>
             <p><a href="#">网站首页</a>|<a href="#">支持论坛</a>|<a href="#">帮助中心</a>|<a href="#">安全退出</a></p>
         </div>
     </div>
@@ -77,13 +77,22 @@
 			el: "#login_info",
 			data: {
 				aname: "",
-				status: 0
+				status: 0,
+				level:""
 			},
 			mounted:function(){
 				axios.get("../../admin", {params:{op:"info"}}).then(result=> {
 					if(result.data.code == 200){ //已登录
 						this.aname=  result.data.data.aname;
 					    this.status = result.data.data.status;
+					    if(this.status == 1){
+					    	this.level = "普通管理员";
+					    }else if(this.status ==2){
+					    	this.level = "高级管理员";
+					    }else if(this.status == 3){
+					    	this.level = "店家";
+					    }
+					
 					}  else{
 						this.aname = "wu";
 					}

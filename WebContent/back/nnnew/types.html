@@ -29,14 +29,14 @@ var types_obj = $('#types_data').datagrid({
 		toolbar:[{
 			text: "添加",
 			iconCls: 'icon-add',
-			handler: function() {
+			handler: function(){
 				types_op = "add";
 				types_flag = "添加";
 				
 				if(types_editRow == undefined){
-					types_obj.datagrid('insertRow',{index:0, row:{}});
-					types_obj.datagrid("beginEdit",0);
-					types_editRow = 0;
+					types_obj.datagrid('insertRow',{index: 0, row:{}});
+					types_obj.datagrid("beginEdit", 0);
+					types_editRow = 1;
 				}
 			}
 		},'-',{
@@ -78,13 +78,13 @@ var types_obj = $('#types_data').datagrid({
 					data = parseInt($.trim(data));
 					if (data>0){
 						$.messager.show({title:'成功提示',msg: types_flag + '商品类型成功...', timeout:2000, showType:'slide'});
-						types_obj.datagrid("reload");
 					}else{
 						$.messager.show('失败提示', types_flag + '商品类型失败...', 'error');
 					}
 					row = null;
 					types_editRow = undefined;
 				}, "text");
+				$('#types_data').datagrid('reload');
 			}
 		},'-',{
 			text:"删除",

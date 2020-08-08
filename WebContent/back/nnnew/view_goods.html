@@ -3,12 +3,12 @@
 <div id="view_goods_search">
    <a href="javascript:openAddGoodsDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="float:left">添加</a>
    <div class="datagrid-btn-separator"></div>
-   <label>商品类型:</label>
+   <label>菜品类型:</label>
    <select id="view_goods_search_tno">
        <option value=''>--请选择--</option>
    </select> 
-   <label>商品类型:</label>
-   <input type="text" placeholder="请输入商品名称..." id="views_goods_search_gname" />
+   <label>菜品类型:</label>
+   <input type="text" placeholder="请输入菜品名称..." id="views_goods_search_gname" />
    <a href="javascript:searchGoodsInfo()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
 </div>
 <div id="view_goods_dialog" data-options="closed:true">
@@ -33,7 +33,7 @@ var view_goods_obj = $('#view_goods_data').datagrid({
 	fitColumns: true,
 	loadMsg: '数据加载中，请稍后...',
 	striped: true,
-	sortName: "fno",
+	sortName: "sales",
 	sortOrder: "desc",
 	remoteSort: false,
 	singleSelct: true,
@@ -42,11 +42,11 @@ var view_goods_obj = $('#view_goods_data').datagrid({
 	pageSize: 10,
 	pageList: [10, 15, 20, 30, 40, 50, 100],
 	columns:[[
-		{field:'fno',title:'商品编号',width:50,align:'center', sortable: true},
-		{field:'fname', title:'商品名称',width:100,align:'center'},
+		{field:'fno',title:'菜品编号',width:50,align:'center'},
+		{field:'fname', title:'菜品名称',width:100,align:'center'},
 		{field:'tname', title:'所属类型',width:100,align:'center'},
 		{field:'price', title:'单价',width:50,align:'center'},
-		{field:'sales', title:'销量',width:100,align:'center'},
+		{field:'sales', title:'销量',width:100,align:'center', sortable: true},
 		{field:'intro', title:'简介',width:200,align:'center'},
 		{field:'_operator', title:'操作',width:100,align:'center', formatter:function(val, row, index){
 			var str ='<a href="javascript:void(0)" class="navy-icon-book-open">详细</a>';
@@ -59,7 +59,7 @@ var view_goods_obj = $('#view_goods_data').datagrid({
 
 function openAddGoodsDialog(){
 	$("#view_goods_dialog").dialog({
-		title: "添加商品信息",
+		title: "添加菜品信息",
 		width: 600,
 		height: 400,
 		closed: false,

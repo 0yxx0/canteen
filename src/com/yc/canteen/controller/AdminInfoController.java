@@ -32,7 +32,17 @@ public class AdminInfoController extends BasicServlet {
 			reg(request, response);
 		}else if("info".equals(op)) {
 			info(request, response);
+		}else if("find".equals(op)) {
+			find(request, response);
 		}
+	}
+
+	private void find(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		   AdminInfo af = RequestParamUtil.getParams(AdminInfo.class,request);
+		      
+		      IAdminInfoBiz adminInfoBiz = new AdminInfoBizImpl();
+			  this.send(response, adminInfoBiz.find(af));
+		
 	}
 
 	private void info(HttpServletRequest request, HttpServletResponse response) throws IOException {

@@ -13,7 +13,7 @@ public class FoodsTypeBizImpl implements IFoodsTypeBiz{
 
 	@Override
 	public int add(FoodsType ft) {
-		if(StringUtil.checkNull(ft.getTno(),ft.getTname())) {
+		if(StringUtil.checkNull(ft.getTname())) {
 			return -1;
 		}
 		IFoodsTypeDao foodsTypeDao = new FoodsTypeDaoImpl();
