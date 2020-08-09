@@ -1,7 +1,6 @@
 <table id="view_goods_data" data-options="fit:true"></table>
 
 <div id="view_goods_search">
-   <a href="javascript:openAddGoodsDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style="float:left">添加</a>
    <div class="datagrid-btn-separator"></div>
    <label>菜品类型:</label>
    <select id="view_goods_search_tno">
@@ -57,38 +56,14 @@ var view_goods_obj = $('#view_goods_data').datagrid({
 	toolbar: "#view_goods_search"
 });
 
-function openAddGoodsDialog(){
-	$("#view_goods_dialog").dialog({
-		title: "添加菜品信息",
-		width: 600,
-		height: 400,
-		closed: false,
-		cache: false,
-		iconCls: "icon-add",
-		modal: true,
-		buttons: [{
-			text: "确定",
-			iconCls:"icon-ok",
-			handler: function(){
-				alert("确定");
-			}
-		}, {
-			text:"取消",
-			iconCls:"icon-cancel",
-			handler: function(){
-				$("#view_goods_dialog").dialog('close');
-			}
-		}]
-	});
-}
 
 function searchGoodsInfo(){
 	var tno = $.trim($("#view_goods_search_tno").val());
-	var gname = $.trim($("#view_goods_search_gname").val());
+	var fname = $.trim($("#view_goods_search_gname").val());
 	
 	view_goods_obj.datagrid({
 		url:"../../foods",
-		queryParams: {op:"findByCondition", tno:tno, gname:gname}
+		queryParams: {op:"findByCondition", tno:tno, fname:fname}
 	})
 }
 </script>

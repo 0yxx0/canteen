@@ -16,4 +16,8 @@ public interface IFoodsBiz {
 	public List<FoodsInfo> findByPage(int page, int rows);
 	
 	public List<FoodsInfo> find();
+
+	public Map<String, Object> findIndex();
+
+	public  Map<String, Object> findByCondition(String tno, String fname, int page, int rows);
 }

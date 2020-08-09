@@ -23,7 +23,7 @@ function checkLogin() {
 	$.post("../admin",{op:"login",aname:account,pwd:pwd},data=>{
 		data = parseInt($.trim(data));
 		if(data == 200){
-			location.href="nnnew/index.html";
+			location.href="manager/index.html";
 		}else{
 			alert("账号或密码错误...");
 		}

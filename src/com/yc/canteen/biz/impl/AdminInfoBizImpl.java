@@ -33,5 +33,20 @@ public class AdminInfoBizImpl implements IAdminInfoBiz {
 		 IAdminInfoDao adminInfoDao = new AdminInfoDaoImpl();
 		   return adminInfoDao.find(af);
 	}
+	
+	@Override
+	public int delete(String aid) {
+		 IAdminInfoDao adminInfoDao = new AdminInfoDaoImpl();
+		   return adminInfoDao.delete(aid);
+	}
+	
+	@Override
+	public int update(AdminInfo af) {
+		if(StringUtil.checkNull(af.getAid())) {
+			return -1;
+		}
+		 IAdminInfoDao adminInfoDao = new AdminInfoDaoImpl();
+		return adminInfoDao.update(af);
+	}
 
 }

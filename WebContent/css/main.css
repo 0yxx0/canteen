@@ -269,3 +269,40 @@ a:hover {
 .active{
 	color: #F4330A;
 }
+
+.header{
+	height:45px;
+	background-color:#FFFFC8;
+}
+
+.right_fr{
+	margin:10px;
+	float:right;
+}
+
+.sec {
+    height: 80px;
+}
+
+.sec_logo {
+    margin-left: 5%;
+    width: 300px;
+    float: left;
+}
+
+.sec_search {
+    float: right;
+    margin-right: 50px;
+    margin-top: 20px;
+}
+
+.sec_search_text {
+    height: 20px;
+}
+
+.sec_search_btn {
+    background: url(../images/searchbox_button.png);
+    width: 20px;
+    height: 20px;
+    float: right;
+}

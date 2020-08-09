@@ -17,34 +17,35 @@ import javax.servlet.http.HttpServletResponse;
 import com.yc.canteen.util.SessionKey;
 import com.yc.canteen.util.StringUtil;
 
-@WebFilter(filterName="CharacterEncodingFilter",value="/back/manager/*",initParams= @WebInitParam(name="errorpage",value="back/index.html"))
+@WebFilter(filterName = "checkBackLoginFilter", value = "/back/manager/*", initParams = @WebInitParam(name="errorpage", value="back/index.html"))
 public class CheckBackLoginFilter implements Filter{
-	private String path = "index.html";
-	
+	private String path = "index.html ";
+
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		String temp = filterConfig.getInitParameter("errorpage");
-		if(!StringUtil.checkNull(temp)) {
+		if( !StringUtil.checkNull(temp)) {
 			path = temp;
 		}
 	}
 	
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)throws IOException, ServletException {
-		HttpServletRequest request = (HttpServletRequest)req;
-	    HttpServletResponse response =(HttpServletResponse) resp;
-			    
-	if(request.getSession().getAttribute(SessionKey.CURRENTLOGINADMIN)== null) {
-		response.setContentType("text/html;charset=utf-8");
-		PrintWriter out = response.getWriter();
-		String basePath = request.getScheme()+"://" + request.getServerName() +":" + request.getServerPort() + request.getContextPath()+"/";
-	    out.print("<script>alert('请先登录...');location.href='"+ basePath + path+ "'</script>");
-	    out.flush();
-	    out.close();
-	}else {
-		chain.doFilter(request, response);
+		HttpServletRequest request = (HttpServletRequest) req;
+		HttpServletResponse response = (HttpServletResponse) resp;
+		
+		if(request.getSession().getAttribute(SessionKey.CURRENTLOGINADMIN) == null) {
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out = response.getWriter();
+			String basePath = request.getScheme() + "://"  + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+			out.print("<script>alert('请先登录...'); location.href='" + basePath + path + "'</script>");
+			out.flush();
+			out.close();
+		}else {
+			chain.doFilter(request, response);
+		}
 		
 	}
-	}
-
 }
+
+

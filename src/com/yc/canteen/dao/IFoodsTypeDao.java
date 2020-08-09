@@ -2,6 +2,7 @@ package com.yc.canteen.dao;
 
 import java.util.List;
 
+import com.yc.canteen.entity.AdminInfo;
 import com.yc.canteen.entity.FoodsType;
 
 

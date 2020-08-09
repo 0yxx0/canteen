@@ -1,14 +1,16 @@
 package com.yc.canteen.biz.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.yc.canteen.biz.IFoodsBiz;
 import com.yc.canteen.dao.IFoodsInfoDao;
+import com.yc.canteen.dao.IFoodsTypeDao;
 import com.yc.canteen.dao.impl.FoodsInfoDaoImpl;
+import com.yc.canteen.dao.impl.FoodsTypeDaoImpl;
 import com.yc.canteen.entity.FoodsInfo;
 import com.yc.canteen.util.StringUtil;
-
 
 public class FoodsBizImpl implements IFoodsBiz {
 
@@ -41,5 +43,24 @@ public class FoodsBizImpl implements IFoodsBiz {
 	public Map<String, Object> findByTid(String tno, int page, int rows) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public Map<String, Object> findIndex() {
+		Map<String, Object> map = new HashMap<String,Object>();
+		IFoodsTypeDao typeDao = new FoodsTypeDaoImpl();
+		IFoodsInfoDao foodsInfoDao = new FoodsInfoDaoImpl();
+		map.put("types", typeDao.findAll());
+		map.put("foods", foodsInfoDao.findIndex());
+		return map;
+	}
+	
+	@Override
+	public Map<String, Object> findByCondition(String tno, String fname, int page, int rows) {
+		IFoodsInfoDao foodsInfoDao = new FoodsInfoDaoImpl();
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("total", foodsInfoDao.total(tno, fname));
+		map.put("rows", foodsInfoDao.findByCondition(tno, fname, page, rows));
+		return map;
 	}
 }

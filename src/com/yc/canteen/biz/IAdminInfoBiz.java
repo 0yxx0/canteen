@@ -11,4 +11,8 @@ public interface IAdminInfoBiz {
 
 	public List<AdminInfo> find(AdminInfo af);
 
+	public int delete(String aid);
+
+	public int update(AdminInfo af);
+
 }

@@ -34,11 +34,30 @@ public class AdminInfoController extends BasicServlet {
 			info(request, response);
 		}else if("find".equals(op)) {
 			find(request, response);
+		}else if("delete".equals(op)) {
+			delete(request, response);
+		}else if("update".equals(op)) {
+			update(request, response);
 		}
 	}
 
+	private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		  AdminInfo af = RequestParamUtil.getParams(AdminInfo.class,request);
+	      
+	      IAdminInfoBiz adminInfoBiz = new AdminInfoBizImpl();
+		  this.send(response, adminInfoBiz.update(af));
+		
+	}
+
+	private void delete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		  String aid = request.getParameter("aid");	      
+	      IAdminInfoBiz adminInfoBiz = new AdminInfoBizImpl();
+		  this.send(response, adminInfoBiz.delete(aid));
+		
+	}
+
 	private void find(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		   AdminInfo af = RequestParamUtil.getParams(AdminInfo.class,request);
+		      AdminInfo af = RequestParamUtil.getParams(AdminInfo.class,request);
 		      
 		      IAdminInfoBiz adminInfoBiz = new AdminInfoBizImpl();
 			  this.send(response, adminInfoBiz.find(af));
@@ -76,7 +95,8 @@ public class AdminInfoController extends BasicServlet {
 			this.send(response, 500);
 		}else {
 			HttpSession session = request.getSession();
-			session.setAttribute("CURRENTLOGINADMIN",af);
+			session.setAttribute(SessionKey.CURRENTLOGINADMIN,af);
+			Object obj = session.getAttribute("CURRENTLOGINADMIN");
 			this.send(response, 200);
 		}
 	}

@@ -1,128 +1,171 @@
-<!doctype html>
-<html lang="zh-CN">
+﻿<!DOCTYPE html>
+<html>
 <head>
-<title>源辰-后台首页</title>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="../css/common.css">
-<link rel="stylesheet" href="../css/style.css">
-<link rel="shortcut icon" href="../../images/copylogo.png" type="image/x-icon" />
-<script type="text/javascript" src="../js/jquery.min.js"></script>
-<script type="text/javascript" src="../js/jquery.SuperSlide.js"></script>
-<script type="text/javascript">
-    $(function(){
-        $(".sideMenu").slide({
-            titCell:"h3",
-            targetCell:"ul",
-            defaultIndex:0,
-            effect:'slideDown',
-            delayTime:'500' ,
-            trigger:'click',
-            triggerTime:'150',
-            defaultPlay:true,
-            returnDefault:false,
-            easing:'easeInQuint',
-            endFun:function(){
-                scrollWW();
-            }
-        });
-        $(window).resize(function() {
-            scrollWW();
-        });
-    });
-    function scrollWW(){
-        if($(".side").height()<$(".sideMenu").height()){
-            $(".scroll").show();
-            var pos = $(".sideMenu ul:visible").position().top-38;
-            $('.sideMenu').animate({top:-pos});
-        }else{
-            $(".scroll").hide();
-            $('.sideMenu').animate({top:0});
-            n=1;
-        }
-    }
-
-    var n=1;
-    function menuScroll(num){
-        var Scroll = $('.sideMenu');
-        var ScrollP = $('.sideMenu').position();
-        if(num==1){
-            Scroll.animate({top:ScrollP.top-38});
-            n = n+1;
-        }else{
-            if (ScrollP.top > -38 && ScrollP.top != 0) { ScrollP.top = -38; }
-            if (ScrollP.top<0) {
-                Scroll.animate({top:38+ScrollP.top});
-            }else{
-                n=1;
-            }
-            if(n>1){
-                n = n-1;
-            }
-        }
-    }
-
-    function showpage(obj,page){
-        $("#rightMain").attr("src",page);
-        $("#sideMenu li").removeClass("on");
-        $(obj).parent().addClass("on");
-        $("#here_area").text("当前位置："+$(obj).text());
-    }
-</script>
+<meta charset="utf-8" />
+<title>后台管理</title>
+<link rel="stylesheet" type="text/css" href="../../css/easyui.css" />
+<link rel="stylesheet" type="text/css" href="../../css/wu.css" />
+<link rel="stylesheet" type="text/css" href="../../css/icon.css" />
+<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../js/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../../js/showpic.js"></script>
+<script type="text/javascript" src="../../js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="../../js/axios.js"></script>
+<script type="text/javascript" src="../../js/vue.js"></script>
+<script src="../../ckeditor/ckeditor.js"></script>
 </head>
-<body>
-<div class="top">
-    <div id="top_t">
-        <div id="logo" class="fl"></div>
-        <div id="photo_info" class="fr">
-            <div id="photo" class="fl">
-                <a href="#"><img src="../../images/copylogo.png" alt="源辰信息" width="60" height="60"></a>
-            </div>
-            <div id="base_info" class="fr">
-                <div class="help_info">
-                    <a href="1" id="hp">&nbsp;</a>
-                    <a href="2" id="gy">&nbsp;</a>
-                    <a href="../index.html" id="out">&nbsp;</a>
-                </div>
-                <div class="info_center">
-                   7777
-                    <span id="nt">通知</span><span><a href="#" id="notice">3</a></span>
-                </div>
-            </div>
+<body class="easyui-layout">
+	<!-- begin of header -->
+	<div class="wu-header" data-options="region:'north',border:false,split:true">
+    	<div class="wu-header-left">
+        	<h1>EasyUI Web Admin</h1>
+        </div>
+        <div class="wu-header-right" id="login_info" >
+        	<p>{{level}}<strong class="easyui-tooltip" title="2条未读消息">{{aname}}</strong>，欢迎您！</p>
+            <p><a href="#">网站首页</a>|<a href="#">支持论坛</a>|<a href="#">帮助中心</a>|<a href="#">安全退出</a></p>
         </div>
     </div>
-    <div id="side_here">
-        <div id="side_here_l" class="fl"></div>
-        <div id="here_area" class="fl">当前位置：欢迎界面</div>
+    <!-- end of header -->
+    <!-- begin of sidebar -->
+	<div class="wu-sidebar" data-options="region:'west',split:true,border:true,title:'导航菜单'"> 
+    	<div class="easyui-accordion" data-options="border:false,fit:true"> 
+        	<div title="食品信息管理" data-options="iconCls:'icon-report-picture'" style="padding:5px;">  	
+    			<ul class="easyui-tree wu-side-tree">
+                    <li iconCls="icon-report"><a href="javascript:void(0)" data-icon="icon-report" data-link="types.html" iframe="0">食品类型</a></li>
+                    <li iconCls="icon-report-add"><a href="javascript:void(0)" data-icon="icon-report-add" data-link="add_foods.html" iframe="0">添加食品</a></li>
+                    <li iconCls="icon-report-edit"><a href="javascript:void(0)" data-icon="icon-report-edit" data-link="view_goods.html" iframe="0">食品维护</a></li>
+                </ul>
+            </div>
+            
+            <div title="管理中心" data-options="iconCls:'icon-user'" style="padding:5px;">  	
+    			<ul class="easyui-tree wu-side-tree">
+                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="admin.html" iframe="0">添加管理员</a></li>
+                    <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="view_admin.html" iframe="0">管理员管理
+                    
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>	
+    <!-- end of sidebar -->    
+    <!-- begin of main -->
+    <div class="wu-main" data-options="region:'center'">
+        <div id="wu-tabs" class="easyui-tabs" data-options="border:false,fit:true">  
+            <div title="首页" data-options="href:'',closable:false,iconCls:'icon-tip',cls:'pd3'"></div>
+        </div>
     </div>
-</div>
-<div class="side">
-    <div class="sideMenu" id="sideMenu" style="margin:0 auto">
-        <h3>用户信息</h3>
-        <ul>
-            <li><a href="javascript:void(0)" onclick="showpage(this,'admin.html')">添加管理员</a></li>
-            <li><a href="javascript:void(0)" onclick="showpage(this,'view_admin.html')">管理员信息</a></li>
-            <li><a href="javascript:void(0)" onclick="showpage(this,'user.html')">会员信息</a></li>
-        </ul>
-        <h3>新闻类型</h3>
-        <ul>
-            <li><a href="javascript:void(0)" onclick="showpage(this,'type.html')">菜品类型</a></li>
-        </ul>
-        <h3>新闻信息</h3>
-        <ul>
-            <li><a href="javascript:void(0)" onclick="showpage(this,'add_foods.html')">添加菜品</a></li>
-            <li><a href="javascript:void(0)" onclick="showpage(this,'view_foods.html')">浏览菜品</a></li>
-        </ul>
+    <!-- end of main --> 
+    <!-- begin of footer -->
+	<div class="wu-footer" data-options="region:'south',border:true,split:true">
+    	&copy; 2013 Wu All Rights Reserved
     </div>
-</div>
-<div class="main">
-    <iframe name="right" id="rightMain" src="welcome.html" frameborder="no" scrolling="auto" width="100%" height="auto" allowtransparency="true"></iframe>
-</div>
-<div class="bottom">
-    <div id="bottom_bg"><a class="copy" href="http://www.hyycinfo.com">源辰信息科技有限公司</a>&copy;版权所有 0734-8355998</div>
-</div>
-<div class="scroll">
-    <a href="javascript:;" class="per" title="使用鼠标滚轴滚动侧栏" onclick="menuScroll(1);"></a>
-    <a href="javascript:;" class="next" title="使用鼠标滚轴滚动侧栏" onclick="menuScroll(2);"></a>
-</div>
+    <!-- end of footer -->  
+    <script type="text/javascript">
+		$(function(){
+			info();
+			$('.wu-side-tree a').bind("click",function(){
+				var title = $(this).text();
+				var url = $(this).attr('data-link');
+				var iconCls = $(this).attr('data-icon');
+				var iframe = $(this).attr('iframe')==1?true:false;
+				addTab(title,url,iconCls,iframe);
+			});	
+		});
+		
+		let login = new Vue({
+			el: "#login_info",
+			data: {
+				aname: "",
+				status: 0,
+				level:""
+			},
+			mounted:function(){
+				axios.get("../../admin", {params:{op:"info"}}).then(result=> {
+					if(result.data.code == 200){ //已登录
+						this.aname=  result.data.data.aname;
+					    this.status = result.data.data.status;
+					    if(this.status == 1){
+					    	this.level = "普通管理员";
+					    }else if(this.status ==2){
+					    	this.level = "高级管理员";
+					    }else if(this.status == 3){
+					    	this.level = "店家";
+					    }
+					
+					}  else{
+						this.aname = "wu";
+					}
+				})
+			}
+		})
+
+		
+		function info(){
+			return axios.get("../../admin", {params:{op:"info"}})
+		}
+		/**
+		* Name 选项卡初始化
+		*/
+		$('#wu-tabs').tabs({
+			tools:[{
+				iconCls:'icon-reload',
+				border:false,
+				handler:function(){
+					$('#wu-datagrid').datagrid('reload');
+				}
+			}]
+		});
+			
+		/**
+		* Name 添加菜单选项
+		* Param title 名称
+		* Param href 链接
+		* Param iconCls 图标样式
+		
+		* Param iframe 链接跳转方式（true为iframe，false为href）
+		*/	
+		function addTab(title, href, iconCls, iframe){
+			var tabPanel = $('#wu-tabs');
+			if(!tabPanel.tabs('exists',title)){
+				var content = '<iframe scrolling="auto" frameborder="0"  src="'+ href +'" style="width:100%;height:100%;"></iframe>';
+				if(iframe){
+					tabPanel.tabs('add',{
+						title:title,
+						content:content,
+						iconCls:iconCls,
+						fit:true,
+						cls:'pd3',
+						closable:true
+					});
+				}
+				else{
+					tabPanel.tabs('add',{
+						title:title,
+						href:href,
+						iconCls:iconCls,
+						fit:true,
+						cls:'pd3',
+						closable:true
+					});
+				}
+			}
+			else
+			{
+				tabPanel.tabs('select',title);
+			}
+		}
+		/**
+		* Name 移除菜单选项
+		*/
+		function removeTab(){
+			var tabPanel = $('#wu-tabs');
+			var tab = tabPanel.tabs('getSelected');
+			if (tab){
+				var index = tabPanel.tabs('getTabIndex', tab);
+				tabPanel.tabs('close', index);
+			}
+		}
+	</script>
 </body>
 </html>

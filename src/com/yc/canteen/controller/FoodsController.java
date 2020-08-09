@@ -17,6 +17,7 @@ import com.yc.canteen.entity.FoodsInfo;
 import com.yc.canteen.util.FileUploadUtil;
 
 
+
 @WebServlet("/foods")
 public class FoodsController extends BasicServlet{
 	private static final long serialVersionUID = 7272032383900864487L;
@@ -41,7 +42,28 @@ public class FoodsController extends BasicServlet{
 			findTid(request, response);
 		} else if("findByNid".equals(op)) {
 			findByNid(request, response);
+		} else if("findIndex".equals(op)) {
+			findIndex(request, response);
+		} else if("findByCondition".equals(op)) {
+			findByCondition(request, response);
 		}
+	}
+	
+    private void findByCondition(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    	int page = Integer.parseInt(request.getParameter("page"));
+		int rows = Integer.parseInt(request.getParameter("rows"));
+        String tno =  request.getParameter("tno");
+        String fname = request.getParameter("fname");
+        IFoodsBiz foodsInfoBiz = new FoodsBizImpl();
+        this.send(response, foodsInfoBiz.findByCondition(tno, fname, page, rows));
+		
+	}
+
+	//首页查询商品信息
+	private void findIndex(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	      IFoodsBiz foodsBiz = new FoodsBizImpl();
+	      this.send(response, 200, "", foodsBiz.findIndex());
+		
 	}
 
 	private void findByNid(HttpServletRequest request, HttpServletResponse response) throws IOException {

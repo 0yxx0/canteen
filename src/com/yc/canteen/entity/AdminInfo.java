@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class AdminInfo implements Serializable{
 	private static final long serialVersionUID = 127481908612080740L;
 
-	private Integer aid;
+	private String aid;
 	private String aname;
 	private String pwd;
 	private String tel;
 	private Integer status;
 	
 	
-	public AdminInfo(Integer aid, String aname, String pwd, String tel, Integer status) {
+	public AdminInfo(String aid, String aname, String pwd, String tel, Integer status) {
 		super();
 		this.aid = aid;
 		this.aname = aname;
@@ -26,10 +26,10 @@ public class AdminInfo implements Serializable{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public Integer getAid() {
+	public String getAid() {
 		return aid;
 	}
-	public void setAid(Integer aid) {
+	public void setAid(String aid) {
 		this.aid = aid;
 	}
 	public String getAname() {
@@ -102,7 +102,7 @@ public class AdminInfo implements Serializable{
 		return "AdminInfo [aid=" + aid + ", aname=" + aname + ", pwd=" + pwd + ", tel=" + tel + ", status=" + status
 				+ "]";
 	}
-	public AdminInfo(Integer aid, String aname, String pwd, String tel) {
+	public AdminInfo(String aid, String aname, String pwd, String tel) {
 		super();
 		this.aid = aid;
 		this.aname = aname;
