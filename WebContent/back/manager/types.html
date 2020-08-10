@@ -24,7 +24,7 @@ var types_obj = $('#types_data').datagrid({
 			} else{
 				return "可用";
 			}
-		}, editor:{type: "combobox", options:{required: true, valueFiled:"tno", textFiled:"tname", data:statusObj}}}
+		}, editor:{type: "combobox", options:{required: true,  valueField:"tno", textField:"tname", data:statusObj}}}
 	]],
 		toolbar:[{
 			text: "添加",
@@ -36,7 +36,7 @@ var types_obj = $('#types_data').datagrid({
 				if(types_editRow == undefined){
 					types_obj.datagrid('insertRow',{index: 0, row:{}});
 					types_obj.datagrid("beginEdit", 0);
-					types_editRow = 1;
+					types_editRow = 0;
 				}
 			}
 		},'-',{
@@ -73,7 +73,7 @@ var types_obj = $('#types_data').datagrid({
 				var row = types_obj.datagrid("getChanges")[0];
 				
 				row["op"] = types_op;
-				
+								
 				$.post("../../types", row, function(data){
 					data = parseInt($.trim(data));
 					if (data>0){

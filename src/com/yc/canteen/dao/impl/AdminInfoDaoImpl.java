@@ -1,7 +1,6 @@
 package com.yc.canteen.dao.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.yc.canteen.dao.DBHelper;
@@ -25,8 +24,8 @@ public class AdminInfoDaoImpl implements IAdminInfoDao {
 	@Override
 	public List<AdminInfo> find(AdminInfo af) {
 		DBHelper db = new DBHelper();
-		String sql="select aid, aname, pwd, tel, status from admininfo where status!=0";
-		return db.finds(AdminInfo.class, sql);
+		String sql="select aid, aname, pwd, tel, status from admininfo where status<?";
+		return db.finds(AdminInfo.class, sql, af.getStatus());
     }
 	
 	@Override

@@ -58,7 +58,14 @@ public class AdminInfoController extends BasicServlet {
 
 	private void find(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		      AdminInfo af = RequestParamUtil.getParams(AdminInfo.class,request);
-		      
+			  HttpSession session = request.getSession();
+			  
+			  //获取当前管理员等级
+			Object obj = session.getAttribute("status");
+			int status = (int) obj;
+			
+			af.setStatus(status);
+				
 		      IAdminInfoBiz adminInfoBiz = new AdminInfoBizImpl();
 			  this.send(response, adminInfoBiz.find(af));
 		
@@ -67,6 +74,7 @@ public class AdminInfoController extends BasicServlet {
 	private void info(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
 		Object obj = session.getAttribute("CURRENTLOGINADMIN");
+
 		if(obj == null) {
 			this.send(response, 500, "", null);
 			return;
@@ -84,19 +92,22 @@ public class AdminInfoController extends BasicServlet {
 
 
 
+	@SuppressWarnings("unused")
 	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// TODO Auto-generated method stub
 		AdminInfo af = RequestParamUtil.getParams(AdminInfo.class,request);
 		
 		IAdminInfoBiz adminInfoBiz = new AdminInfoBizImpl();
 		af = adminInfoBiz.login(af);
+		int status = af.getStatus();
 		
 		if(af==null) {
 			this.send(response, 500);
 		}else {
 			HttpSession session = request.getSession();
 			session.setAttribute(SessionKey.CURRENTLOGINADMIN,af);
-			Object obj = session.getAttribute("CURRENTLOGINADMIN");
+			session.setAttribute("status", status);
+			session.setAttribute("CURRENTLOGINADMIN",af);
 			this.send(response, 200);
 		}
 	}

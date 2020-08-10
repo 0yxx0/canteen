@@ -1,7 +1,7 @@
 <table id="admin_data" data-options="fit:true"></table>
 
 <script>
-var statusObj = [{aid:0, aname:"不可用"}, {aid:1, aname:"可用"}];
+var statusObj = [{aid:0, aname:"不可用"}, {aid:1, aname:"普通管理员"}, {aid:2, aname:"超级管理员"}, {aid:3, aname:"店家"}];
 var types_editRow = undefined;
 var types_op;
 var types_flag;
@@ -31,7 +31,7 @@ var types_obj = $('#admin_data').datagrid({
 			}else if(val ==3 ){
 				return "店家";
 			}
-		}, editor:{type: "combobox", options:{required: true, valueFiled:"aid", textFiled:"aname", data:statusObj}}}
+		}, editor:{type: "combobox", options:{required: true, valueField:"aid", textField:"aname", data:statusObj}}}
 	]],
 		toolbar:[{
 			text: "编辑",
@@ -63,10 +63,10 @@ var types_obj = $('#admin_data').datagrid({
 					return;
 				}
 				
-				var row = types_obj.datagrid("getChanges")[0];
 				
 				types_obj.datagrid("endEdit", types_editRow);
-			
+			    
+				var row = types_obj.datagrid("getChanges")[0];
 				
 				row["op"] = types_op;
 				
