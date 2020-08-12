@@ -104,7 +104,7 @@ function cPwd(){
 function checkTel(){
 	var Tel= document.getElementById("tel").value;
 	let regPhone = /^1[3456789]\d{9}$/; //移动电话
-                let regTelPhone = new RegExp("^((0\d{2,4})-)(\d{7,8})(-(\d{3,}))?$"); 
+    let regTelPhone = new RegExp("^((0\d{2,4})-)(\d{7,8})(-(\d{3,}))?$"); 
 	if(regPhone.test(Tel) || regTelPhone.test(Tel)){
 	    document.getElementById("telephone").textContent="";
 	    return true;

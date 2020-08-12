@@ -7,6 +7,8 @@
  <link rel="stylesheet" href="css/reset.css">
  <link rel="stylesheet" href="css/main.css">
  <link rel="stylesheet" href="css/goods.css">
+ <link rel="stylesheet" href="css/index.css">
+ 
  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
  <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
  <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
@@ -15,24 +17,25 @@
 
 <body>
 	<!-- 头部  -->
-	<div class="head">
+	<div class="head" id="login_info">
     	<div class="header">
     		<div class="right_fr">
-            	<div class="login_info fl">
-                	欢迎：<em>y c</em>
+            	<div class="login_info fl" v-if="onlogin">
+                	欢迎：<em>{{loginName}}</em>
                 </div>
-                <div class="login_btn fl">
+                <div class="login_btn fl" v-else="onlogin">
                 	<a href="login.html">登录</a>
                     <span> | </span>
                     <a href="register.html">注册</a>
                 </div>
             	 <div class="user_link fl">
                     <span> | </span>
-                    <a href="#">用户中心</a>
+                    <a href="front/user.html">用户中心</a>
                     <span> | </span>
-                    <a href="#">我的购物车</a>
+                    <a href="front/cart.html">我的购物车</a>
+                    <em class="" id="show_count">{{cartCount}}</em>
                     <span> | </span>
-                    <a href="#">我的订单</a>
+                    <a href="front/order.html">我的订单</a>
            		 </div> 
              </div>  
     	</div>
@@ -78,47 +81,80 @@
                   </a>
              </div>        </div>
     </div>
-    
+<div id="app">
     <div class="recommend">
        <div class="rec_title">
           <h1>热 销 美 食</h1>
        </div>
-       <div class="rec_foods">
-       </div>
-        <div class="rec_foods">
-       </div>
-        <div class="rec_foods">
-       </div>
+        <div v-for="hot in hots">
+           <div class="rec_foods">
+              <img :src="hot.pics" class="rec_pic">
+              <div class="rec_fname"><a :href="'foods_details.html#' + hot.fno" target="_blank">{{hot.fname}}</a></div>
+              <div class="rec_sales">累计销量:<em>{{hot.sales}}</em></div>
+           </div>
+         </div>
     </div>
-    <div class="main">
-        <div class="foods">
-           <div class="foods_img">
-               
-           </div>
-           <div class="foods_name">
-               777
-           </div>
-           <div class="foods_btn">
-              <button class="foods_cart">加入购物车</button>
-              <button class="foods_buy">立即购买</button>
-           </div>
+        <!-- 商品展示 -->
+    <div class="list_model" v-for="type in types">
+    	<div class="list_title clearfix" >
+        	<h3 class="fl" id="model01">{{type.tname}}</h3>
+        	<div class="subtitle fl">
+            	<span>|</span>
+                <a v-for="food in foods" v-if="food.tno == type.fno" :href="'foods_details.html#' + food.fno" target="_blank">{{food.fname}}</a>
+            </div>
+            <a :href="'foods_details.html#' + type.tno + '&' + type.tname" target="_blank" class="goods_more fr" id="fruit_more">查看更多</a>
         </div>
-        <div class="foods">
-           
-        </div>
-        <div class="foods">
-           
-        </div>
-        <div class="foods">
-           
-        </div>
-        <div class="foods">
-           
-        </div>
-        <div class="foods">
-           
+    
+    	<div class="goods_con clearfix">        	
+        	<ul class="goods_list fl">
+            	<li v-for="food in foods" v-if="food.tno == type.tno">
+                	<h4><a :href="'foods_details.html#' + food.fno +'&'+ type.tname" target="_blank" >{{food.fname}}</a></h4>
+                    <a :href="'foods_details.html#' + food.fno" target="_blank" > <img :src="food.pics"></a>
+                	<div class="prize">&yen; {{food.price}}</div>
+                </li>
+        	</ul>
         </div>
     </div>
-<body>
+</div>
 </body>
+ <script src="js/jquery-3.4.1.min.js" type="text/javasrcipt"></script>
+ <script src="js/jquery-ui.min.js" type="text/javasrcipt"></script>
+  <script src="js/slide.js" type="text/javascript"></script>
+ <script src="js/vue.js" type="text/javascript"></script>
+<script src="js/axios.js" type="text/javascript"></script>
+<script src="js/qs.js" type="text/javascript"></script>
+ <script src="js/checklogin.js" type="text/javascript"></script>
+<script>
+let vm = new Vue({
+	el: "#app",
+	data: {
+		foods: [],
+		types: [],
+		hots:[]
+	},
+	methods: {
+		
+	},
+	mounted:function(){
+		axios.all([findIndex(), findHot()]).then(axios.spread((fn3, fn4)=>{
+			if(fn3.data.code == 200){
+				this.types = fn3.data.data.types;
+				this.foods = fn3.data.data.foods;
+			} 
+			
+			if( fn4.data.code == 200){
+				this.hots = fn4.data.data.hots;
+			} 
+		}))
+	}
+})
+
+function findIndex(){
+	return axios.get("foods", {params:{op:"findIndex"}})
+}
+
+function findHot(){
+	return axios.get("foods", {params:{op:"findHot"}})
+}
+</script>
 </html>

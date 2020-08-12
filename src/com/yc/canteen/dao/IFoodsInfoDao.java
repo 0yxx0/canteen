@@ -11,8 +11,13 @@ public interface IFoodsInfoDao {
 	List<FoodsInfo> findByPage(int page, int rows);
 
 	public List<FoodsInfo> findIndex();
+	public List<FoodsInfo> findHot();
 
 	//后台食品信息查询
 	public int total(String tno, String fname);
 	public List<FoodsInfo> findByCondition(String tno, String fname, int page, int rows);
+	
+	public FoodsInfo findByFno(String fno);
+	public List<FoodsInfo> findByTno(String tno, int page, int rows);
+	public int total(String tno);
 }

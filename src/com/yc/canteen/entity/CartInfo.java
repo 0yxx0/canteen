@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class CartInfo implements Serializable {
 	private static final long serialVersionUID = -1965070273018732551L;
 	private String cno;
-	private Integer mno;
+	private String mno;
 	private Integer fno;
 	private Integer num;
 	public String getCno() {
@@ -14,10 +14,10 @@ public class CartInfo implements Serializable {
 	public void setCno(String cno) {
 		this.cno = cno;
 	}
-	public Integer getMno() {
+	public String getMno() {
 		return mno;
 	}
-	public void setMno(Integer mno) {
+	public void setMno(String mno) {
 		this.mno = mno;
 	}
 	public Integer getFno() {
@@ -77,7 +77,7 @@ public class CartInfo implements Serializable {
 	public String toString() {
 		return "CartInfo [cno=" + cno + ", mno=" + mno + ", fno=" + fno + ", num=" + num + "]";
 	}
-	public CartInfo(String cno, Integer mno, Integer fno, Integer num) {
+	public CartInfo(String cno, String mno, Integer fno, Integer num) {
 		super();
 		this.cno = cno;
 		this.mno = mno;

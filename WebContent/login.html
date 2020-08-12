@@ -6,12 +6,26 @@
 <link rel="shortcut icon" href="images/eatlogo.jpg">
 <link rel="stylesheet" href="css/reset.css">
 <link rel="stylesheet" href="css/login.css">
+<link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
-	<!-- logo区区域 -->
-	<div class="login_top">
-    	<a href="index.html" class="login_logo"><img src="images/eatlogo.jpg" class="eatlogo"></a>
+	<div class="head">
+    	<div class="header">
+    		<div class="right_fr">
+                <div class="login_btn fl">
+                	<a href="login.html">登录</a>
+                    <span> | </span>
+                    <a href="register.html">注册</a>
+                </div>
+             </div>  
+    	</div>
+    </div>
+    
+     <div class="sec">
+       <div class="sec_logo">
+          <img src="images/主页1.png" />
+       </div>
     </div>
 	
 	<!-- 内容区域 -->
@@ -77,10 +91,10 @@ let app = new Vue({
 	el:"#app",
 	data:{
 		account: "demo01",
-		pwd: "123",
+		pwd: "123456",
 		code: "",
 		status:[false, false, false],
-		info:"亲输入验证码..."
+		info:"请输入验证码..."
 	},
 	methods: {
 		checkInfo: function(flag){
@@ -125,7 +139,7 @@ let app = new Vue({
 
 			Vue.set(app.status, 2, false);
 
-			axios.post("member", qs.stringify({op:"login", account:this.account, pwd:this.pwd, code:this.code})).then(result =>{
+			axios.post("member", qs.stringify({op:"login", nickName:this.account, pwd:this.pwd, code:this.code})).then(result =>{
 				if(result.data.code == 500){
 					this.info = "验证码错误...";
 					Vue.set(app.status, 2, true);
@@ -137,6 +151,7 @@ let app = new Vue({
 						history.go(-1);
 					}
 				} else{
+					alert(result.data.code);
 					this.info = "账号或密码错误...";
 					Vue.set(app.status, 2, true);
 				}

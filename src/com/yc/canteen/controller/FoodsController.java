@@ -46,10 +46,28 @@ public class FoodsController extends BasicServlet{
 			findIndex(request, response);
 		} else if("findByCondition".equals(op)) {
 			findByCondition(request, response);
+		} else if("findByFno".equals(op)) {
+			findByFno(request, response);
+		} else if("findHot".equals(op)) {
+			findHot(request, response);
 		}
 	}
 	
-    private void findByCondition(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void findHot(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    	  IFoodsBiz foodsBiz = new FoodsBizImpl();
+	      this.send(response, 200, "", foodsBiz.findHot());
+		
+	}
+
+	private void findByFno(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String fno =  request.getParameter("fno");
+        IFoodsBiz foodsInfoBiz = new FoodsBizImpl();
+        this.send(response, 200, "", foodsInfoBiz.findByFno(fno));
+
+		
+	}
+
+	private void findByCondition(HttpServletRequest request, HttpServletResponse response) throws IOException {
     	int page = Integer.parseInt(request.getParameter("page"));
 		int rows = Integer.parseInt(request.getParameter("rows"));
         String tno =  request.getParameter("tno");

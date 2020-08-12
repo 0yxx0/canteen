@@ -11,6 +11,8 @@ public interface IFoodsTypeDao {
 	
 	public List<FoodsType> findAll();
 	
+	public List<FoodsType> findIndex();
+
 	public List<FoodsType> finds();
 	
 	public int update(FoodsType nt);

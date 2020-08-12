@@ -23,6 +23,7 @@
 
 /*中部展示区域*/
 .login_form_bg{
+	margin-top:20px;
 	height:480px;
 	background:url(../images/login-top.jpg) no-repeat;/*不平铺*/
 	background-size:1519px 480px;

@@ -4,7 +4,7 @@ let login = new Vue({
 		onlogin: false,
 		loginName: "匿名",
 		loginId: "",
-		cartCcount: 0
+		cartCount: 0
 	},
 	mounted: function(){
 		axios.all([checkLogin(), getCartInfo()]).then(axios.spread((fn1, fn2)=>{
@@ -30,6 +30,6 @@ function checkLogin(){
 	return axios.get("member", {params:{op:"info"}})
 }
 
-function checkLogin(){
+function getCartInfo(){
 	return axios.get("cart", {params:{op:"info"}})
 }

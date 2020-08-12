@@ -36,6 +36,12 @@ public class FoodsTypeDaoImpl implements IFoodsTypeDao {
 	}
 	
 	@Override
+	public List<FoodsType> findIndex() {
+		DBHelper db = new DBHelper();
+		String sql = "select tno, tname, status from foodstype where status !=0 ";
+		return db.finds(FoodsType.class,sql);
+	}
+	@Override
 	public int update(FoodsType nt) {
 		DBHelper db = new DBHelper();
 		List<Object> params = new ArrayList<Object>();

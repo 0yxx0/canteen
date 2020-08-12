@@ -50,8 +50,16 @@ public class FoodsBizImpl implements IFoodsBiz {
 		Map<String, Object> map = new HashMap<String,Object>();
 		IFoodsTypeDao typeDao = new FoodsTypeDaoImpl();
 		IFoodsInfoDao foodsInfoDao = new FoodsInfoDaoImpl();
-		map.put("types", typeDao.findAll());
+		map.put("types", typeDao.findIndex());
 		map.put("foods", foodsInfoDao.findIndex());
+		return map;
+	}
+	
+	@Override
+	public Map<String, Object> findHot() {
+		Map<String, Object> map = new HashMap<String,Object>();
+		IFoodsInfoDao foodsInfoDao = new FoodsInfoDaoImpl();
+		map.put("hots", foodsInfoDao.findHot());
 		return map;
 	}
 	
@@ -61,6 +69,27 @@ public class FoodsBizImpl implements IFoodsBiz {
 		Map<String, Object> map = new HashMap<String,Object>();
 		map.put("total", foodsInfoDao.total(tno, fname));
 		map.put("rows", foodsInfoDao.findByCondition(tno, fname, page, rows));
+		return map;
+	}
+	
+	@Override
+	public FoodsInfo findByFno(String fno) {
+		IFoodsInfoDao foodsInfoDao = new FoodsInfoDaoImpl();
+		return foodsInfoDao.findByFno(fno);
+	}
+	
+	@Override
+	public List<FoodsInfo> findByTno(String tno, int page, int rows) {
+		IFoodsInfoDao foodsInfoDao = new FoodsInfoDaoImpl();
+		return foodsInfoDao.findByTno(tno, page, rows);
+	}
+	
+	@Override
+	public Map<String, Object> findByTnos(String tno, int page, int rows) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		IFoodsInfoDao foodsInfoDao = new FoodsInfoDaoImpl();
+		map.put("total", foodsInfoDao.total(tno));
+		map.put("rows", foodsInfoDao.findByTno(tno, page, rows));
 		return map;
 	}
 }

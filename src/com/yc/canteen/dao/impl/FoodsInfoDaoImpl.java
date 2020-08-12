@@ -33,6 +33,13 @@ public class FoodsInfoDaoImpl implements IFoodsInfoDao {
 	}
 	
 	@Override
+	public List<FoodsInfo> findHot() {
+		DBHelper db = new DBHelper();
+		String sql = "select fno, fname, price, tno, pics, sales from foodsinfo ORDER BY sales DESC LIMIT 0,3";
+		return db.finds(FoodsInfo.class, sql);	// TODO Auto-generated method stub
+	}
+	
+	@Override
 	public List<FoodsInfo> findByCondition(String tno, String fname, int page, int rows) {
 		DBHelper db = new DBHelper();
 		String sql = "select fno, f.tno, tname, fname, price, sales, intro, pics, f.status from foodsinfo f, foodstype t "
@@ -69,5 +76,26 @@ public class FoodsInfoDaoImpl implements IFoodsInfoDao {
 		}
 		
 		return db.total(sql, params);
+	}
+	
+	@Override
+	public FoodsInfo findByFno(String fno) {
+		DBHelper db = new DBHelper();
+		String sql = "select fno, fname, price, intro, pics from foodsinfo where fno=?";
+		return db.find(FoodsInfo.class, sql, fno);
+	}
+	
+	@Override
+	public List<FoodsInfo> findByTno(String tno, int page, int rows) {
+		DBHelper db = new DBHelper();
+		String sql = "select fno, fname, price, intro, pics from foodsinfo where fno=?";
+		return db.finds(FoodsInfo.class, sql, tno, (page-1)*rows, rows);
+	}
+	
+	@Override
+	public int total(String tno) {
+		DBHelper db = new DBHelper();
+		String sql = "select count(fno) from foodsinfo where tno=?";
+		return db.total(sql, tno);
 	}
 }

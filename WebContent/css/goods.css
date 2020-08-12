@@ -22,71 +22,6 @@
 	padding:0 5px;
 }
 
-/* 新品推荐样式 */
-.new_goods{
-	border:1px solid #ededed;
-	border-top:2px solid #37ab40;
-	padding-bottom:10px;
-}
-.new_goods h3{
-	height:33px;
-	line-height:33px;
-	background-color:#fcfcfc;
-	border-bottom:1px solid #ededed;
-	font-weight:normal;
-	text-indent:10px;
-}
-.new_goods ul{
-	width:160px;
-	margin:0 auto;
-	overflow:hidden;
-}
-.new_goods li{
-	border-bottom:1px solid #ededed;
-	margin-bottom:-1px;
-}
-.new_goods li img{
-	display:block;
-	width:160px;
-	height:160px;
-	margin:10px auto;
-}
-.new_goods li h4{
-	width:160px;
-	margin:0 auto;
-}
-.new_goods li h4 a{
-	font-weight:normal;
-	color:#666;
-	display:block;
-	overflow:hidden;
-	white-space:nowrap;
-	text-overflow:ellipsis;
-}
-.new_goods li .prize{
-	color:#da260e;
-	margin:10px auto;
-}
-
-/* 商品列表样式 */
-.sort_bar{
-	height:30px;
-	background-color:#f0fdec;
-}
-.sort_bar a{
-	display:block;
-	height:30px;
-	line-height:30px;
-	padding:0 20px;
-	float:left;
-	color:#000;
-}
-.sort_bar .active{
-	background-color:#37ab40;
-	color:#fff;
-}
-
-
 /* 分页样式 */
 .pagenation{
 	height:32px;
@@ -124,7 +59,7 @@
 //顶部图片展示
 .top_main{
 	margin-left:10%;
-	width:80%;
+	width:90%;
 	height:280px;
 }
 
@@ -136,11 +71,13 @@
 }
 
 .right_fr{
-	margin:10px;
+	margin-right:10px;
 	float:right;
 }
 
-
+#show_count{
+	color: blue;
+}
 
 .recommend{
 	width:100%;
@@ -150,15 +87,31 @@
 .rec_title{
 	text-align:center;
 }
-
+.rec_pic{
+	width:335px;
+	height:200px;
+}
 .rec_foods{
 	width:340px;
 	height:260px;
-	border:2px solid red;
+	border:2px solid #7FFFD4;
 	margin-left:120px;
 	float:left;
 }
+.rec_fname{
+	font-size: 24px;
+	color:blue;
+	text-align:center;
+}
 
+.rec_sales{
+	text-align:right;
+	color:red;
+}
+
+#demo{
+	width:100%;
+}
 .main{
 	margin-top:20px;
 	width:90%;
@@ -167,7 +120,7 @@
 	width:160px;
 	margin-left:80px;
 	margin-top:40px;
-	height:220px;
+	height:256px;
 	border:2px solid  #666666;
 	float:left;
 }
@@ -180,7 +133,20 @@
 	height:170px;
 	border:2px solid red;
 }
-
+.foods_img:hover{
+	width:160px;
+	height:180px;
+	border:2px solid red;
+}
 .foods_name{
 	text-align:center;
 }
+
+.foods_price{
+	text-align:center;
+}
+
+.foods_btn{
+	float:right;
+}
+

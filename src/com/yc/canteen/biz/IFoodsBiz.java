@@ -20,4 +20,11 @@ public interface IFoodsBiz {
 	public Map<String, Object> findIndex();
 
 	public  Map<String, Object> findByCondition(String tno, String fname, int page, int rows);
+	
+	public FoodsInfo findByFno(String fno);
+	public List<FoodsInfo> findByTno(String tno, int page, int rows);
+	public  Map<String, Object> findByTnos(String tno, int page, int rows);
+
+	public Map<String, Object> findHot();
+
 }

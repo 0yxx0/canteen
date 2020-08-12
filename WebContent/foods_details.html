@@ -8,26 +8,26 @@
  <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/foods_details.css">
 </head>
-
 <body>
-	<div class="head">
+	<div class="head" id="login_info">
     	<div class="header">
     		<div class="right_fr">
-            	<div class="login_info fl">
-                	欢迎：<em>y c</em>
+            	<div class="login_info fl" v-if="onlogin">
+                	欢迎：<em>{{loginName}}</em>
                 </div>
-                <div class="login_btn fl">
+                <div class="login_btn fl" v-else="onlogin">
                 	<a href="login.html">登录</a>
                     <span> | </span>
                     <a href="register.html">注册</a>
                 </div>
             	 <div class="user_link fl">
                     <span> | </span>
-                    <a href="#">用户中心</a>
+                    <a href="front/user.html">用户中心</a>
                     <span> | </span>
-                    <a href="#">我的购物车</a>
+                    <a href="front/cart.html">我的购物车</a>
+                    <em class="" id="show_count">{{cartCount}}</em>
                     <span> | </span>
-                    <a href="#">我的订单</a>
+                    <a href="front/order.html">我的订单</a>
            		 </div> 
              </div>  
     	</div>
@@ -42,16 +42,19 @@
           <button class="sec_search_btn"></button>
        </div>
     </div>
-    
+<div id="foods">
     <div class="dt_main">
-        <div class="dt_pic">
+        <div class="dt_pic" id="dt_pic">
+            <img v-for="pic in pics" :src="pic" class="pic"></img>
         </div>
         <div class="dt_main_intro">
+            <div class="foods_fname" id="foods_fname">
+            </div>
             <div class="dt_price">
-                 <label>单价:</label>
+                 <label>单价:<em>{{foods.price}}</em></label>
             </div>
             <div class="dt_nums">
-                 <label>数量:</label>
+                 <label>数量:<input type="number" class="ipt_num" id="number" value="" placeholder="1" onblur="checkNum()"/></label>
            </div>
             <div class="dt_amount">
                 <label>总价:</label>
@@ -65,7 +68,73 @@
         </div>
     </div>
     
-    <div class="dt_details">
+    <div class="dt_details" id="dt_details">
+         
     </div>
+</div>
 </body>
+ <script src="js/jquery-3.4.1.min.js"></script>
+ <script src="js/vue.js" type="text/javascript"></script>
+<script src="js/axios.js" type="text/javascript"></script>
+<script src="js/qs.js" type="text/javascript"></script>
+ <script src="js/checklogin.js" type="text/javascript"></script>
+<script>
+let vm = new Vue({
+	el: "#foods",
+	data: {
+		foods: [],
+		pics:[],
+		nums:1
+	},
+	methods: {
+		
+	},
+	mounted:function(){
+		axios.all([getFoodsByFno()]).then(axios.spread((result) =>{
+			this.foods = result.data.data;
+			this.pics = result.data.data.pics.split(";");
+			
+			this.$nextTick(function(){
+				showPics();
+			})
+		}));
+	}
+})
+
+function getFoodsByFno(){
+	var hash = decodeURI(location.hash);
+	if(hash == "" || hash.indexOf("&")<=0){
+		location.href="index.html";
+		return;
+	}
+	
+	hash = hash.replace("#", "").split("&");
+	$("#foods_fname").text(hash[1]);
+	
+	return axios.post("foods", qs.stringify({op:"findByFno", fno:hash[0]}));
+}
+
+function showPics() {
+	var imglen = $("#dt_pic>img").length;
+	if(imglen >1){
+		var i = 0;
+		setInterval(()=>{
+			$("#dt_pic>img").css("display", "none");
+			$("#dt_pic>img").eq(i).css("display", "block");		
+			i = (i + 1) % imglen;
+		}, 2000);
+	}
+}
+
+function checkNum(){
+	var nums=document.getElementById("number").value;;
+	let tt = /^[0123456789]\d{0,3}$/; 
+	if(tt.test(nums)){
+	    return;
+	}else{
+	}
+	
+}
+
+</script>
 </html>
