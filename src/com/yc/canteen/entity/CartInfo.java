@@ -8,6 +8,10 @@ public class CartInfo implements Serializable {
 	private String mno;
 	private Integer fno;
 	private Integer num;
+	
+	private String fname;//商品名称
+	private double price;//价格
+	private String pics;//图片
 	public String getCno() {
 		return cno;
 	}
@@ -32,14 +36,37 @@ public class CartInfo implements Serializable {
 	public void setNum(Integer num) {
 		this.num = num;
 	}
+	public String getFname() {
+		return fname;
+	}
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	public String getPics() {
+		return pics;
+	}
+	public void setPics(String pics) {
+		this.pics = pics;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cno == null) ? 0 : cno.hashCode());
+		result = prime * result + ((fname == null) ? 0 : fname.hashCode());
 		result = prime * result + ((fno == null) ? 0 : fno.hashCode());
 		result = prime * result + ((mno == null) ? 0 : mno.hashCode());
 		result = prime * result + ((num == null) ? 0 : num.hashCode());
+		result = prime * result + ((pics == null) ? 0 : pics.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(price);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 	@Override
@@ -56,6 +83,11 @@ public class CartInfo implements Serializable {
 				return false;
 		} else if (!cno.equals(other.cno))
 			return false;
+		if (fname == null) {
+			if (other.fname != null)
+				return false;
+		} else if (!fname.equals(other.fname))
+			return false;
 		if (fno == null) {
 			if (other.fno != null)
 				return false;
@@ -71,18 +103,29 @@ public class CartInfo implements Serializable {
 				return false;
 		} else if (!num.equals(other.num))
 			return false;
+		if (pics == null) {
+			if (other.pics != null)
+				return false;
+		} else if (!pics.equals(other.pics))
+			return false;
+		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
+			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
-		return "CartInfo [cno=" + cno + ", mno=" + mno + ", fno=" + fno + ", num=" + num + "]";
+		return "CartInfo [cno=" + cno + ", mno=" + mno + ", fno=" + fno + ", num=" + num + ", fname=" + fname
+				+ ", price=" + price + ", pics=" + pics + "]";
 	}
-	public CartInfo(String cno, String mno, Integer fno, Integer num) {
+	public CartInfo(String cno, String mno, Integer fno, Integer num, String fname, double price, String pics) {
 		super();
 		this.cno = cno;
 		this.mno = mno;
 		this.fno = fno;
 		this.num = num;
+		this.fname = fname;
+		this.price = price;
+		this.pics = pics;
 	}
 	public CartInfo() {
 		super();

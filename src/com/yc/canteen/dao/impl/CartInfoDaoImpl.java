@@ -19,7 +19,7 @@ public class CartInfoDaoImpl implements ICartInfoDao{
 	@Override
 	public List<CartInfo> finds(String mno) {
 		DBHelper db = new DBHelper();
-		String sql="select cno, c.fno, num, price, pics, fname from cartinfo c, foodsinfo f where c.fno=f.fno and mno=?";
+		String sql="select c.cno, c.fno, c.num, f.price, f.pics, f.fname, c.mno from cartinfo c, foodsinfo f where c.fno=f.fno and mno=?";
 		return db.finds(CartInfo.class, sql, mno);
 	}
 	@Override
@@ -54,5 +54,29 @@ public class CartInfoDaoImpl implements ICartInfoDao{
 	}
 
 
+	public List<CartInfo> findByCnos(String[] cnos) {
+		DBHelper db = new DBHelper();
+		String sql = "select cno, c.fno, num,price,pics, fname from cartinfo c, foodsinfo f where c.fno = f.fno and cno in(";
+		List<Object> params = new ArrayList<Object>();
+		for(String cno : cnos) {
+			sql +="?,";
+			params.add(cno);
+		}
+		sql = sql.substring(0,sql.lastIndexOf(",")) +")";
+		//System.out.println(sql);
+		return db.finds(CartInfo.class ,sql,params);
+	}
 	
+	@Override
+	public int Increase(String cno) {
+		DBHelper db = new DBHelper();
+		String sql="update cartinfo set num = num + 1 where cno=?";
+		return db.update(sql, cno);
+	}
+	
+	public int Decrease(String cno) {
+		DBHelper db = new DBHelper();
+		String sql="update cartinfo set num = num - 1 where cno=?";
+		return db.update(sql, cno);
+	}
 }

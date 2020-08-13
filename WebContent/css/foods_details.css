@@ -6,8 +6,19 @@
 	width:100%;
 	margin-top:10px;
 }
+
+.foods_tname{
+	font-size:32px;
+	background-color:#FF3366;
+}
+
+.foods_fname{
+	margin-left:20px;
+	font-size:32px;
+}
 .dt_pic{
 	margin-left:100px;
+	margin-top:20px;
 	height:300px;
 	width:300px;
 	border:2px solid red;
@@ -18,10 +29,12 @@
 	height:300px;
 }
 .dt_main_intro{
-	margin-left:100px;
+	margin-left:300px;
 	width:500px;
 	height:600px;
 	float:left;
+	margin-top:20px;
+	font-weight: bold;
 }
 
 .dt_price{

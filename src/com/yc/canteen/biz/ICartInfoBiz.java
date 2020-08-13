@@ -21,5 +21,12 @@ public interface ICartInfoBiz {
 	
 	//删除购物车
 	public int delete(String cnos);
+
+	public List<CartInfo> findByCnos(String cnos);
+
+	public int Increase(String cno);
+
+	public int Decrease(String cno);
+
 	
 }

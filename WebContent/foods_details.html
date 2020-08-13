@@ -44,27 +44,31 @@
     </div>
 <div id="foods">
     <div class="dt_main">
+        <div class="foods_tname" id="foods_tname">
+        </div>
+      <hr></hr>
+      <div class="details_bg">
         <div class="dt_pic" id="dt_pic">
             <img v-for="pic in pics" :src="pic" class="pic"></img>
         </div>
         <div class="dt_main_intro">
-            <div class="foods_fname" id="foods_fname">
+            <div class="foods_fname">
+                {{foods.fname}}
             </div>
             <div class="dt_price">
-                 <label>单价:<em>{{foods.price}}</em></label>
-            </div>
+                 <h2>单价:<em>{{foods.price}}</em></h2>
+           </div>
             <div class="dt_nums">
-                 <label>数量:<input type="number" class="ipt_num" id="number" value="" placeholder="1" onblur="checkNum()"/></label>
+                 <label>数量:<input type="number" class="ipt_num" id="number" value="" v-model="nums"/></label>
+                 <label class="nums_warn" id="nums_warn"></label>
            </div>
             <div class="dt_amount">
-                <label>总价:</label>
-            </div>
-            <div class="dt_buy">
-                 <button>购买</button>
+                <label>总价:<em>{{foods.price * nums}}</em></label>
             </div>
             <div class="dt_cart">
-                 <button>加入购物车</button>
+                 <a @click="addCart()">加入购物车</a>
             </div>
+        </div>
         </div>
     </div>
     
@@ -87,7 +91,50 @@ let vm = new Vue({
 		nums:1
 	},
 	methods: {
-		
+		addCart:function(){
+			//先判断在购物车中是否存在->从购物车中判断
+			if(!login.$data.loginId){
+				alert("请先登录...");
+				location.href="login.html";
+				return;
+			}
+			//判断该商品在购物车中是否存在 ->从购物车中判断
+			if(checkNum()==false){
+				return;
+			}
+			let lcarts = login.$data.carts;
+			if(lcarts.length >0){//说明购物车中有数据
+				for(let i=0,len=lcarts.length;i<len;i++){
+					if(lcarts[i].fno == this.foods.fno){//说明这个商品已经购买过
+						axios.post("cart",qs.stringify({op:"update",fno:this.foods.fno,num: this.nums, cno:lcarts[i].cno})).then(result => {
+							if(result.data.code == 200){
+								alert("加入购物车成功...");
+								console.info(200);
+							}else{
+								alert("加入购物车失败")
+							}
+						})
+						return;
+					}
+				}
+			}
+			
+			axios.post("cart",qs.stringify({op:"add",fno:this.foods.fno, num: this.nums, mno:login.$data.loginId})).then(result =>{
+				if(result.data.code == 200){
+					login.$data.cartCount = login.$data.cartCount +1;//购物车中商品种类+1;
+					
+					//将这个新种类添加到cart中
+					let newObj = {};
+					newObj.cno = result.data.msg;
+					newObj.fno = this.foods.fno;
+					login.$data.carts.push(newObj);
+					alert("加入购物车成功...");
+					
+				}else{
+					alert("加入购物车失败...");
+				}
+			})
+		}
 	},
 	mounted:function(){
 		axios.all([getFoodsByFno()]).then(axios.spread((result) =>{
@@ -109,7 +156,7 @@ function getFoodsByFno(){
 	}
 	
 	hash = hash.replace("#", "").split("&");
-	$("#foods_fname").text(hash[1]);
+	$("#foods_tname").text(hash[1]);
 	
 	return axios.post("foods", qs.stringify({op:"findByFno", fno:hash[0]}));
 }
@@ -130,8 +177,10 @@ function checkNum(){
 	var nums=document.getElementById("number").value;;
 	let tt = /^[0123456789]\d{0,3}$/; 
 	if(tt.test(nums)){
-	    return;
 	}else{
+		document.getElementById("nums_warn").style="color:red";
+		document.getElementById("nums_warn").textContent="请输入正确的数量！！";
+		return false;
 	}
 	
 }

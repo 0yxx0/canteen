@@ -59,7 +59,9 @@ public class FoodsBizImpl implements IFoodsBiz {
 	public Map<String, Object> findHot() {
 		Map<String, Object> map = new HashMap<String,Object>();
 		IFoodsInfoDao foodsInfoDao = new FoodsInfoDaoImpl();
+		IFoodsTypeDao typeDao = new FoodsTypeDaoImpl();
 		map.put("hots", foodsInfoDao.findHot());
+		map.put("types", typeDao.findIndex());
 		return map;
 	}
 	

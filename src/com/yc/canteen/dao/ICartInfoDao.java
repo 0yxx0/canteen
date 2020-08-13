@@ -23,4 +23,10 @@ public interface ICartInfoDao {
 	public int delete(String[] cnos);
 	
 	public int delete(String cno);
+
+	public List<CartInfo> findByCnos(String[] temp);
+
+	public int Increase(String cno);
+
+	public int Decrease(String cno);
 }

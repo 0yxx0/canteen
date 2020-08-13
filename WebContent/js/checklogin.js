@@ -4,7 +4,8 @@ let login = new Vue({
 		onlogin: false,
 		loginName: "匿名",
 		loginId: "",
-		cartCount: 0
+		cartCount: 0,
+		carts:[]
 	},
 	mounted: function(){
 		axios.all([checkLogin(), getCartInfo()]).then(axios.spread((fn1, fn2)=>{

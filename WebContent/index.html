@@ -87,9 +87,9 @@
           <h1>热 销 美 食</h1>
        </div>
         <div v-for="hot in hots">
-           <div class="rec_foods">
-              <img :src="hot.pics" class="rec_pic">
-              <div class="rec_fname"><a :href="'foods_details.html#' + hot.fno" target="_blank">{{hot.fname}}</a></div>
+           <div class="rec_foods" v-for="type in types" v-if="hot.tno == type .tno">
+              <a :href="'foods_details.html#' + hot.fno +'&'+ type.tname" target="_blank"><img :src="hot.pics" class="rec_pic"></img>
+              <div class="rec_fname"  ><a :href="'foods_details.html#' + hot.fno +'&'+ type.tname" target="_blank">{{hot.fname}}</a></div>
               <div class="rec_sales">累计销量:<em>{{hot.sales}}</em></div>
            </div>
          </div>
@@ -109,7 +109,7 @@
         	<ul class="goods_list fl">
             	<li v-for="food in foods" v-if="food.tno == type.tno">
                 	<h4><a :href="'foods_details.html#' + food.fno +'&'+ type.tname" target="_blank" >{{food.fname}}</a></h4>
-                    <a :href="'foods_details.html#' + food.fno" target="_blank" > <img :src="food.pics"></a>
+                    <a :href="'foods_details.html#' + food.fno +'&'+ type.tname" target="_blank" > <img :src="food.pics"></a>
                 	<div class="prize">&yen; {{food.price}}</div>
                 </li>
         	</ul>
