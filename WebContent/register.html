@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>天天生鲜-注册</title>
+<link rel="shortcut icon" href="images/eatlogo.jpg">
+ <link rel="stylesheet" href="css/reset.css">
+ <link rel="stylesheet" href="css/reg.css">
+ <link rel="stylesheet" href="css/unlock.css">
+ <link rel="stylesheet" href="css/foot.css">
+ <link rel="stylesheet" href="css/login.css">
+ <link rel="stylesheet" href="css/main.css">
+ <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+ <script src="js/unlock.js"></script>
+</head>
+
+<body>
+	<div class="head">
+    	<div class="header">
+    		<div class="right_fr">
+                <div class="login_btn fl">
+                	<a href="login.html">登录</a>
+                    <span> | </span>
+                    <a href="register.html">注册</a>
+                </div>
+             </div>  
+    	</div>
+    </div>
+    
+     <div class="sec">
+       <div class="sec_logo">
+         <a href="index.html"> <img src="images/主页1.png" /></a> 
+       </div>
+    </div>
+	
+	<!-- 内容区域 -->
+    <div class="login_form_bg">
+    	<div class="login_form_wrap clearfix">
+            <div class="login_form fr" id="register_main" >
+                <div class="login_title	clearfix">
+                    <h1 class="fl">用户注册</h1>
+                </div>
+				<!-- 登录区域 -->
+                <div class="form_input clearfix" id="app">
+                    <form action="reg" method="post" target="iframe">
+						<ul>
+                            <li>
+                                <input type="text" onblur="checkNick()" name="nickname" class="name_input" id="nickname" placeholder="请输入用户名" id="nickname">
+								<label id="cnickname"></label>
+                            </li>
+                            <li>
+                                <input type="password"  onblur="checkPwd()"  class="pwd_input" id="pwd" placeholder="请输入密码" >
+								<label id="ckpwd">密码必须由6-16位数字、字母、下划线组成</label>
+                            </li>
+                            <li>
+                                <input type="password"  onblur="checkCpwd()"  class="pwd_input" id="cpwd" placeholder="请再次输入密码" >
+								<label id="cckpwd"></label>
+                            </li>
+                            <li>
+                                <input type="email"  onblur="checkEmail()"  class="email_input" id="email" name="email" placeholder="请输入邮箱地址">
+								<label id="cemail"></label>
+								<input type="submit" value="发送验证码" /><br/>  
+                            </li>
+                            <li>
+                                <input type="text"  onblur="checkCode()"  class="email_input" id="code" placeholder="请输入邮箱验证码">
+								<label id="ccode"></label>
+                            </li>
+                            <li>
+                               <input type="button" value="注册" class="submit_input" onclick="reg()">
+                            </li>
+                      	</ul>
+                    </form>
+                    <iframe id="iframe" name="iframe" style="display:none;"></iframe>
+                </div>
+            </div>
+         </div>
+    </div>
+	
+	<!-- 版权所有-->
+    <div class="footer">
+    </div>
+<script src="js/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="js/vue.js" type="text/javascript"></script>
+<script src="js/axios.js" type="text/javascript"></script>
+<script src="js/qs.js" type="text/javascript"></script>
+<script>	
+function checkNick(){
+	var username; 
+	username= $.trim($("#nickname").val());
+	if(username == ""){
+		document.getElementById("cnickname").style="color:red";
+		document.getElementById("cnickname").textContent="请输入名字";
+	}else{
+	    document.getElementById("cnickname").textContent="";
+	    return true;
+	}
+}
+
+function checkPwd(){
+	var pwd; 
+    let regPassword = new RegExp("^[0-9A-Za-z0-9_]{5,16}$");
+ 	pwd=document.getElementById("pwd").value;
+	if(regPassword.test(pwd)){
+		document.getElementById("ckpwd").textContent="";
+		document.getElementById("ckpwd").style="color:black";
+	    return true;
+	}else{
+		document.getElementById("ckpwd").style="color:red";
+		document.getElementById("ckpwd").textContent="密码必须由6-16位数字、字母、下划线组成";
+	}
+}
+
+function checkCpwd(){
+	var pwd; 
+ 	pwd=document.getElementById("pwd").value;
+	var cpwd;
+	cpwd=document.getElementById("cpwd").value;
+	if(cpwd==pwd || pwd== ""){
+		document.getElementById("cckpwd").textContent="";
+	    return true;
+	}else{
+		document.getElementById("cckpwd").style="color:red";
+		document.getElementById("cckpwd").textContent="请输入相同的密码";
+	}
+}
+
+function checkEmail(){
+	var em= document.getElementById("email").value;
+	let regEm =  new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
+	if(regEm.test(em)){
+	    document.getElementById("cemail").textContent="";
+	    return true;
+	}else{
+		document.getElementById("cemail").style="color:red";
+		document.getElementById("cemail").textContent="请输入正确的邮箱";
+	}
+}
+
+function checkCode(){
+	var code= document.getElementById("code").value;
+	let ccode= "w8z8";
+	if(code == ccode){
+		return true;
+	}else{
+		
+	}
+}
+function reg(){	
+	checkNick()
+	checkPwd();
+	checkCpwd();
+	checkEmail();
+	checkCode();
+	if(checkNick()!=true || checkPwd()!=true || checkCpwd()!=true || checkEmail()!=true || checkCode()!=true){
+		return;
+	}
+	
+	var nickname = $.trim($("#nickname").val());
+	var pwd = $.trim($("#pwd").val());
+	var email = $.trim($("#email").val());
+	$.post("member",{op:"reg",nickName:nickname,pwd:pwd,email:email},data => {
+		data = parseInt($.trim(data));
+		if(data != -1){
+			alert("注册成功！！！");
+			location.href="index.html";
+		}else{
+			alert("注册失败");
+		}
+	},"text")
+}
+</script>
+</body>
+</html>

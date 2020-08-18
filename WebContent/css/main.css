@@ -306,3 +306,11 @@ a:hover {
     height: 20px;
     float: right;
 }
+
+.footer{
+	text-align: center;
+}
+#foot{
+	text-align: center;
+	font-size: 24px; 
+}

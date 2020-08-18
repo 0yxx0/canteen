@@ -64,7 +64,6 @@ public class FoodsTypeController extends BasicServlet {
 	private void add(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		FoodsType type =RequestParamUtil.getParams(FoodsType.class, request);
 		
-		System.out.println(type);
 		IFoodsTypeBiz typeBiz = new FoodsTypeBizImpl();
 		this.send(response, typeBiz.add(type));
 	}

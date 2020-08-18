@@ -74,7 +74,25 @@ public class DBHelper{
 	
 	
 	
+	/**
+	 * 给多条预编译语句块的？赋值
+	 * @param pstmt
+	 * @param params
+	 */
+	private void setParams2(int m,PreparedStatement pstmt, List<List<Object>> params) {
+		if (params == null || params.isEmpty()) { // 说明没有参数给我， 也就意味着执行的SQL语句中没有占位符?
+			return;
+		}
+	    for (int j=0, lenth=params.get(m).size();j<lenth;j++) {
+			try {
+				pstmt.setObject(j + 1, params.get(m).get(j));
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("第 "+(m+1)+"个语句的第" + (j + 1) + " 个参数注值失败...");
+			}
+		}
 	
+	}
 	/**
 	 * 外部封装
 	 * 关闭资源的方法
@@ -175,8 +193,33 @@ public class DBHelper{
 		return result;
 	}
 	
-
-	
+	/**
+	 * 多条语句执行的更新
+	 * @param sqls
+	 * @param params
+	 * @return
+	 */
+	public int updates(List<String> sqls, List<List<Object>> params) {  // 采用不定参数形式
+		int result = -1;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = this.getConnection();
+			int m=0;
+			for(String sql :sqls) {
+				pstmt= con.prepareStatement(sql); // 预编译执行语句
+				this.setParams2(m,pstmt, params); //  给预编译执行语句中的占位符赋值
+				result = pstmt.executeUpdate(); // 执行更新
+				m=m+1;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			this.close(null, pstmt, con);
+		}
+		return result;
+	}
 	
 	/**
 	 * 2.查询多行(一般情况下用Object对象比较少)

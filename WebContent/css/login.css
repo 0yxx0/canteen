@@ -55,6 +55,14 @@
 	height:378px;
 	border:1px solid #ccc;
 	background:#fff;
+	margin-top:30px;
+}
+
+.reg_form{
+	width:368px;
+	height:408px;
+	border:1px solid #ccc;
+	background:#fff;
 	margin-top:50px;
 }
 .login_title{
@@ -102,6 +110,16 @@
 }
 .pwd_input{
 	background-position:280px -95px;
+}
+.email_input{
+		width:306px;
+	height:36px;
+	border:1px solid #e0e0e0;	
+	/*背景图片*/
+	background:no-repeat 280px -42px #f8f8f8;
+	font-size:14px;
+	text-indent:15px;
+	outline:none;
 }
 .yzm_input{
 	width:230px;
@@ -171,4 +189,22 @@
 }
 .footer p{
 	margin-top:10px;
+}
+
+#register_main{
+	margin-right:300px;
+	height:440px;
+}
+#register_main2{
+	margin-right: 100px;
+	height:320px;
+}
+#submit_input2{
+	background: red;
+}
+#yuan{
+	display: none;
+}
+#mno{
+	display: none;
 }

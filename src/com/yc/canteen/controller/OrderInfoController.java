@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,17 +23,27 @@ public class OrderInfoController extends BasicServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		
 		String op = request.getParameter("op");
 		if("add".equals(op)) {//添加订单
 			add(request,response);
 		}else if("find".equals(op)) {//根据会员编号查询订单信息
 			find(request,response);
+		}else if("week".equals(op)) {
+			week(request, response);
 		}
+	}
+
+	private void week(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		IOrderInfoBiz orderInfoBiz = new OrderInfoBizImpl();
+		this.send(response, 200, "", orderInfoBiz.week());
 	}
 
 	private void find(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session  = request.getSession();
-		Object obj = session.getAttribute("currentLoginMember");
+		Object obj = session.getAttribute("CURRENTLOGINUSER");
 		if(obj == null) {
 			this.send(response, 500,"",null);
 			return;
@@ -57,7 +68,6 @@ public class OrderInfoController extends BasicServlet{
 		map.put("odate", list.get(0).get("odate"));
 		map.put("price", list.get(0).get("price"));
 		map.put("status", list.get(0).get("status"));
-		
 		
 		for(Map<String,String> rt:list) {
 			curOno = rt.get("ono");
@@ -88,17 +98,33 @@ public class OrderInfoController extends BasicServlet{
 		this.send(response, 200,null,result);
 	}
 
-	private void add(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void add(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String cnos = request.getParameter("cnos");
-		double price = Double.parseDouble(request.getParameter("price"));
-		String ano = request.getParameter("ano");
+		double totalPrice = Double.parseDouble(request.getParameter("totalPrice"));
+		HttpSession session  = request.getSession();
+		String ono = UUID.randomUUID().toString().replace("-","");
 		
-		IOrderInfoBiz orderInfoBiz = new OrderInfoBizImpl();
-		int result = orderInfoBiz.add(cnos, price,ano);
+		request.setAttribute("WIDout_trade_no", ono);
+		request.setAttribute("totalPrice",76);
+		request.setAttribute("WIDsubject", "wft");
+		Object obj = session.getAttribute("CURRENTLOGINUSER");
+		if(obj == null) {
+			this.send(response, 500,"",null);
+			return;
+		}
+		MemberInfo mf = (MemberInfo) obj;
+		IOrderInfoBiz orderInfoBiz = new OrderInfoBizImpl();		
+		String mno = mf.getMno();
+		
+		int result = orderInfoBiz.add(cnos, totalPrice,mno);
 		if(result>0) {
 			this.send(response, 200,null,null);
 			return;
+			
 		}
+		
+		request.getRequestDispatcher("wappay/pay.jsp").forward(request, response);
+
 		this.send(response,500,null,null);
 	}
 

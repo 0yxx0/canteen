@@ -6,7 +6,7 @@
 <link rel="shortcut icon" href="images/eatlogo.jpg">
  <link rel="stylesheet" href="css/reset.css">
  <link rel="stylesheet" href="css/main.css">
- <link rel="stylesheet" href="css/goods.css">
+ <link rel="stylesheet" href="css/foods.css">
  <link rel="stylesheet" href="css/index.css">
  
  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
@@ -30,12 +30,12 @@
                 </div>
             	 <div class="user_link fl">
                     <span> | </span>
-                    <a href="front/user.html">用户中心</a>
-                    <span> | </span>
                     <a href="front/cart.html">我的购物车</a>
-                    <em class="" id="show_count">{{cartCount}}</em>
-                    <span> | </span>
-                    <a href="front/order.html">我的订单</a>
+                    <em class="" id="show_count">{{cartCount}}件</em>
+                     <span> | </span>
+                    <a href="front/user.html" target="_blank">用户中心</a>
+                     <span> | </span>
+                    <a href="front/order.html" target="_blank">我的订单</a>
            		 </div> 
              </div>  
     	</div>
@@ -43,11 +43,10 @@
     
     <div class="sec">
        <div class="sec_logo">
-          <img src="images/主页1.png" />
+         <a href="index.html"> <img src="images/主页1.png" /></a> 
        </div>
        <div class="sec_search">
-          <input type="text" class="sec_search_text" />
-          <button class="sec_search_btn"></button>
+
        </div>
     </div>
     <div class="top">
@@ -87,7 +86,7 @@
           <h1>热 销 美 食</h1>
        </div>
         <div v-for="hot in hots">
-           <div class="rec_foods" v-for="type in types" v-if="hot.tno == type .tno">
+           <div class="rec_foods" v-for="type in types" v-if="hot.tno == type.tno">
               <a :href="'foods_details.html#' + hot.fno +'&'+ type.tname" target="_blank"><img :src="hot.pics" class="rec_pic"></img>
               <div class="rec_fname"  ><a :href="'foods_details.html#' + hot.fno +'&'+ type.tname" target="_blank">{{hot.fname}}</a></div>
               <div class="rec_sales">累计销量:<em>{{hot.sales}}</em></div>
@@ -102,7 +101,6 @@
             	<span>|</span>
                 <a v-for="food in foods" v-if="food.tno == type.fno" :href="'foods_details.html#' + food.fno" target="_blank">{{food.fname}}</a>
             </div>
-            <a :href="'foods_details.html#' + type.tno + '&' + type.tname" target="_blank" class="goods_more fr" id="fruit_more">查看更多</a>
         </div>
     
     	<div class="goods_con clearfix">        	
@@ -116,6 +114,10 @@
         </div>
     </div>
 </div>
+
+    <div class="footer" id="foot">
+    	<p>CopyRight &copy; 2020 YXX All Rights</p>
+    </div>
 </body>
  <script src="js/jquery-3.4.1.min.js" type="text/javasrcipt"></script>
  <script src="js/jquery-ui.min.js" type="text/javasrcipt"></script>
@@ -141,7 +143,6 @@ let vm = new Vue({
 				this.types = fn3.data.data.types;
 				this.foods = fn3.data.data.foods;
 			} 
-			
 			if( fn4.data.code == 200){
 				this.hots = fn4.data.data.hots;
 			} 

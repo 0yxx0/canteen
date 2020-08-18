@@ -1,6 +1,7 @@
 package com.yc.canteen.controller;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,11 +29,47 @@ public class MemberInfoController extends BasicServlet {
 			login(request, response);
 		}else if("info".equals(op)) {
 			info(request, response);
+		}else if("finds".equals(op)) {
+			finds(request, response);
+		}else if("reg".equals(op)) {
+			reg(request, response);
+		}else if("change".equals(op)) {
+			change(request, response);
 		}
 }
 
+	private void change(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        MemberInfo mf = RequestParamUtil.getParams(MemberInfo.class,request);
+        
+        String pwd = mf.getPwd();
+        
+		IMemberInfoBiz memberInfoBiz = new MemberInfoBizImpl();
+		this.send(response, memberInfoBiz.change(pwd));
+	}
+
+	private void reg(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        MemberInfo mf = RequestParamUtil.getParams(MemberInfo.class,request);
+        
+		String mno = UUID.randomUUID().toString().replace("-","");
+
+		mf.setMno(mno);
+		HttpSession session = request.getSession();
+		session.setAttribute(SessionKey.CURRENTLOGINUSER,mf);
+		session.setAttribute("CURRENTLOGINUSER",mf);
+		IMemberInfoBiz memberInfoBiz = new MemberInfoBizImpl();
+
+		this.send(response, memberInfoBiz.reg(mf));
+		
+	}
+
+	private void finds(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		IMemberInfoBiz memberInfoBiz = new MemberInfoBizImpl();
+		this.send(response, memberInfoBiz.finds());
+	}
+
 	private void info(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
+
 		Object obj = session.getAttribute("CURRENTLOGINUSER");
 
 		if(obj == null) {

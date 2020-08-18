@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../../js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="../../js/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../js/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../../js/showpic.js"></script>
+<script type="text/javascript" src="../../js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="../../js/axios.js"></script>
+<script type="text/javascript" src="../../js/vue.js"></script>
+<script type="text/javascript" src="../../js/echarts.min.js"></script>
+<script type="text/javascript" src="../../js/qs.js"></script>
+
+</head>
+<body>
+
+    <div id="main" style="width: 600px;height:400px;"></div>
+     <script type="text/javascript">
+     var myChart;
+      
+             //创建ECharts图表方法bai
+             function DrawEChart(ec) {
+                 //--- 折柱 ---
+                 myChart = ec.init(document.getElementById('main'));
+                 //图表显示提示信息du
+                 myChart.showLoading({
+                     text: "图表数据正在努力加载..."
+                 });
+                 //定义图表options
+                 var options = {
+                     title: {
+                         text: "通过Ajax获取数据呈现图标示例",
+                     },
+                     tooltip: {
+                         trigger: 'axis'
+                     },
+                     legend: {
+                         data: []
+                     },
+                     toolbox: {
+                         show: true,
+                         feature: {
+                             mark: false
+                         }
+                     },
+                     calculable: true,
+                     xAxis: [
+                         {
+                             type: 'category',
+                             data: []
+                         }
+                     ],
+                     yAxis: [
+                         {
+                             type: 'value',
+                             splitArea: { show: true }
+                         }
+                     ],
+                     series: []
+                 };
+      
+                 //通过Ajax获取数据
+                 $.ajax({
+                     type: "post",
+                     async: false, //同步执行
+                     url: "/../../order?op=week",
+                     dataType: "json", //返回数据形式为json
+                     success: function (result) {
+                         if (result) {                        
+                             //将返回的category和series对象赋值给options对象内的category和series
+                             //因为xAxis是一个数组 这里需要是xAxis[i]的形式
+                             options.xAxis[0].data = result.category;
+                             options.series = result.series;
+                             options.legend.data = result.legend;
+                             myChart.hideLoading();
+                             myChart.setOption(options);
+                         }
+                     },
+                     error: function (errorMsg) {
+                         alert("不好意思，大爷，图表请求数据失败啦!");
+                     }
+                 });
+             }
+    </script>
+    <label id="demo"></label>
+</body>
+
+</html>

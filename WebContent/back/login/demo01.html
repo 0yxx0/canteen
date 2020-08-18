@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../../js/echarts.min.js"></script>
+
+<script type="text/javascript" src="../../js/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="../../js/showpic.js"></script>
+<script type="text/javascript" src="../../js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="../../js/axios.js"></script>
+<script type="text/javascript" src="../../js/vue.js"></script>
+<script type="text/javascript" src="../../js/qs.js"></script>
+<script src="../../js/jquery-3.4.1.min.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+ <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例   
+var myChart = echarts.init(document.getElementById('main'));
+ 
+        // 指定图表的配置项和数据
+        var option = {
+            tooltip: {},
+            legend: {
+                data:['日销售额']
+            },
+            xAxis: {
+                name: '日期',
+                data: ['2020-08-04', '2020-08-13', '2020-08-13', '2020-08-13']
+            },
+            yAxis: {},
+            series: [{
+                name: '销售额',
+                type: 'bar',
+                data: [304.00, 100024.00, 50.00, 48.00]
+            }]
+        };
+ 
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+ 
+</body>
+
+<script type="text/javascript">
+$(function(){
+	post("../../order", {op:"week"}, function(data){
+		
+	});
+})
+</script>
+</html>

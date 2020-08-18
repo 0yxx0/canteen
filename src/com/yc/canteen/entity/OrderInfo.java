@@ -11,7 +11,7 @@ public class OrderInfo implements Serializable{
 	private Integer status;
 	private double price;
 	private String tano;
-	private Integer mno;
+	private String mno;
 	public String getOno() {
 		return ono;
 	}
@@ -48,10 +48,10 @@ public class OrderInfo implements Serializable{
 	public void setTano(String tano) {
 		this.tano = tano;
 	}
-	public Integer getMno() {
+	public String getMno() {
 		return mno;
 	}
-	public void setMno(Integer mno) {
+	public void setMno(String mno) {
 		this.mno = mno;
 	}
 	@Override
@@ -117,7 +117,7 @@ public class OrderInfo implements Serializable{
 		return "OrderInfo [ono=" + ono + ", odate=" + odate + ", pdate=" + pdate + ", status=" + status + ", price="
 				+ price + ", tano=" + tano + ", mno=" + mno + "]";
 	}
-	public OrderInfo(String ono, String odate, String pdate, Integer status, double price, String tano, Integer mno) {
+	public OrderInfo(String ono, String odate, String pdate, Integer status, double price, String tano, String mno) {
 		super();
 		this.ono = ono;
 		this.odate = odate;

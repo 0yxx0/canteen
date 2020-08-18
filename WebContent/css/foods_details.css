@@ -5,6 +5,7 @@
 	height:400px;
 	width:100%;
 	margin-top:10px;
+	background: url("../images/details_bg.jpg");
 }
 
 .foods_tname{
@@ -67,8 +68,9 @@
 
 .dt_cart{
 	margin-top:80px;
-	width:120px;
+	width:200px;
 	float:left;
+	font-size: 32px;
 }
 
 .dt_details{

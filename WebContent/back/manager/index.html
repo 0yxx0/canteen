@@ -14,6 +14,7 @@
 <script type="text/javascript" src="../../js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="../../js/axios.js"></script>
 <script type="text/javascript" src="../../js/vue.js"></script>
+<script type="text/javascript" src="../../js/echarts.min.js"></script>
 <script src="../../ckeditor/ckeditor.js"></script>
 </head>
 <body class="easyui-layout">
@@ -35,10 +36,14 @@
     			<ul class="easyui-tree wu-side-tree">
                     <li iconCls="icon-report"><a href="javascript:void(0)" data-icon="icon-report" data-link="types.html" iframe="0">食品类型</a></li>
                     <li iconCls="icon-report-add"><a href="javascript:void(0)" data-icon="icon-report-add" data-link="add_foods.html" iframe="0">添加食品</a></li>
-                    <li iconCls="icon-report-edit"><a href="javascript:void(0)" data-icon="icon-report-edit" data-link="view_goods.html" iframe="0">食品维护</a></li>
+                    <li iconCls="icon-report-edit"><a href="javascript:void(0)" data-icon="icon-report-edit" data-link="view_foods.html" iframe="0">食品维护</a></li>
                 </ul>
             </div>
-            
+            <div title="食品信息管理" data-options="iconCls:'icon-report-picture'" style="padding:5px;">  	
+    			<ul class="easyui-tree wu-side-tree">
+                    <li iconCls="icon-report-edit"><a href="javascript:void(0)" data-icon="icon-report-edit" data-link="echarts.html" iframe="0">查看菜品报表</a></li>
+                </ul>
+            </div>
             <div title="管理中心" data-options="iconCls:'icon-user'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
                     <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="admin.html" iframe="0">添加管理员</a></li>

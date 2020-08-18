@@ -2,9 +2,9 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>天天生鲜-支付管理</title>
+<title>一家餐厅-支付</title>
 <base href="../">
- <link rel="shortcut icon" href="images/copylogo.png">
+<link rel="shortcut icon" href="images/eatlogo.jpg">
  <link rel="stylesheet" href="css/reset.css">
  <link rel="stylesheet" href="css/main.css">
  <link rel="stylesheet" href="css/order.css">
@@ -24,12 +24,10 @@
                 </div>
             	 <div class="user_link fl">
                     <span> | </span>
-                    <a href="front/user.html">用户中心</a>
-                    <span> | </span>
                     <a href="front/cart.html">我的购物车</a>
-                    <em class="" id="show_count">{{cartCount}}</em>
+                    <em class="" id="show_count">{{cartCount}}件</em>
                     <span> | </span>
-                    <a href="front/order.html">我的订单</a>
+                    <a href="front/user.html" target="_blank">用户中心</a>
            		 </div> 
              </div>  
     	</div>
@@ -37,11 +35,9 @@
     
     <div class="sec">
        <div class="sec_logo">
-          <img src="images/主页1.png" />
+         <a href="index.html"> <img src="images/主页1.png" /></a> 
        </div>
        <div class="sec_search">
-          <input type="text" class="sec_search_text" />
-          <button class="sec_search_btn"></button>
        </div>
     </div>
 <div id="app">     
@@ -50,7 +46,7 @@
 	<div class="common_list_con clearfix" id="order_list">
 		<ul class="goods_list_th clearfix">
 			<li class="col01">商品名称</li>
-			<li class="col03">商品单位</li>
+			<li class="col03">------------</li>
 			<li class="col03">商品价格</li>
 			<li class="col02">数量</li>
 			<li class="col03">小计</li>		
@@ -58,17 +54,17 @@
 	</div>
 	<div class="order_list_con" id="order_list">
 	   <div  v-for="item in orders">
-			<div class="order_title"><span>订购日期：{{item.odata}}</span> <span>订单号：{{item.ono}}</span><span>订单总额：{{item.totalprice}}元</span>
+			<div class="order_title"><span>订购日期：{{item.odate}}</span> <span>订单号：{{item.ono}}</span><span>订单总额：{{item.totalprice}}元</span>
 				<a href="" v-if="item.status == 1">去支付</a>
 				<a href="" v-else-if="item.status == 2">已支付</a>
 				<a href="" v-else-if="item.status == 3">已发货</a>
 				<a href="" v-else>已完成</a>
 			</div>
-			<ul class="goods_list_td clearfix" v-for="(itm,index) in item.goods">
+			<ul class="goods_list_td clearfix" v-for="(itm,index) in item.foods">
 				<li class="col01">{{index+1}}</li>			
 				<li class="col02"><img :src="itm.pics"></li>
-				<li class="col03">{{itm.gname}}</li>
-				<li class="col04">{{itm.weight}}/{{itm.unit}}</li>
+				<li class="col03">{{itm.fname}}</li>
+				<li class="col04">------------</li>
 				<li class="col04">{{itm.price}}元</li>
 				<li class="col03">{{itm.nums}}</li>
 				<li class="col04">{{itm.nums * itm.price}}元</li>	
@@ -76,16 +72,11 @@
 	   </div>
 	</div>
  </div>       
-   <!-- 版权所有 -->
     <div class="footer">
     	<div class="foot_link">
-        	<a href="#">关于我们</a> <span> | </span>
-            <a href="#">联系我们</a> <span> | </span>
-            <a href="#">招聘广告</a> <span> | </span>
-            <a href="#">友情链接</a>
+
         </div>
-    	<p>CopyRight &copy; 2019 衡阳市源辰信息科技有限公司 All Rights Reserverd</p>
-        <p>电话：0734-8355998 湘ICP备16015987号-1</p>
+    	<p>CopyRight &copy; 2020 YXX All Rights</p>
     </div>
     
     <!--  注意引入顺序 -->

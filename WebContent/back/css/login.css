@@ -104,7 +104,7 @@ input,img{
 .copy {
 	color:#FFF; 
 	text-decoration: none;
-	background: url("../../images/copylogo.png") no-repeat left center;
+	background:  no-repeat left center;
 	padding-left: 20px;
 }
 

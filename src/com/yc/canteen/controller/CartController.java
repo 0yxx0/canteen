@@ -94,7 +94,6 @@ public class CartController extends BasicServlet{
 		ICartInfoBiz cartInfoBiz = new CartInfoBizImpl();
 		String cno = UUID.randomUUID().toString().replace("-", "");
 		cf.setCno(cno);
-		System.out.println(cf);
 		int result = cartInfoBiz.add(cf);
 		if(result>0) {
 			this.send(response, 200, cno, null);
