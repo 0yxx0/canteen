@@ -44,6 +44,11 @@
                     <li iconCls="icon-report-edit"><a href="javascript:void(0)" data-icon="icon-report-edit" data-link="echarts.html" iframe="0">查看菜品报表</a></li>
                 </ul>
             </div>
+             <div title="会员信息管理" data-options="iconCls:'icon-report-picture'" style="padding:5px;">  	
+    			<ul class="easyui-tree wu-side-tree">
+                    <li iconCls="icon-report-edit"><a href="javascript:void(0)" data-icon="icon-report-edit" data-link="view_member.html" iframe="0">查看会员信息</a></li>
+                </ul>
+            </div>
             <div title="管理中心" data-options="iconCls:'icon-user'" style="padding:5px;">  	
     			<ul class="easyui-tree wu-side-tree">
                     <li iconCls="icon-cog"><a href="javascript:void(0)" data-icon="icon-cog" data-link="admin.html" iframe="0">添加管理员</a></li>
@@ -90,11 +95,7 @@
 					if(result.data.code == 200){ //已登录
 						this.aname=  result.data.data.aname;
 					    this.status = result.data.data.status;
-					    if(this.status == 1){
-					    	this.level = "普通管理员";
-					    }else if(this.status ==2){
-					    	this.level = "高级管理员";
-					    }else if(this.status == 3){
+                        if(this.status == 3){
 					    	this.level = "店家";
 					    }
 					

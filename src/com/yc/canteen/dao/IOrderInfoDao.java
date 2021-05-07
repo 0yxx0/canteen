@@ -7,11 +7,10 @@ import com.yc.canteen.entity.OrderInfo;
 
 public interface IOrderInfoDao {
 
-
 	List<Map<String, String>> finds(String mno);
 
 	int add(String cnos, double price, String mno);
 
-	List<OrderInfo> week();
+	List<OrderInfo> all();
 
 }

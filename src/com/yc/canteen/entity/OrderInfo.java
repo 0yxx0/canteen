@@ -2,7 +2,7 @@ package com.yc.canteen.entity;
 
 import java.io.Serializable;
 
-public class OrderInfo implements Serializable{
+public class OrderInfo implements Serializable {
 	private static final long serialVersionUID = -2328858016309595923L;
 
 	private String ono;
@@ -12,52 +12,87 @@ public class OrderInfo implements Serializable{
 	private double price;
 	private String tano;
 	private String mno;
+	private String fname;
+	private String amount;
+
+	public String getFname() {
+		return fname;
+	}
+
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+
+	public String getAmount() {
+		return amount;
+	}
+
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+
 	public String getOno() {
 		return ono;
 	}
+
 	public void setOno(String ono) {
 		this.ono = ono;
 	}
+
 	public String getOdate() {
 		return odate;
 	}
+
 	public void setOdate(String odate) {
 		this.odate = odate;
 	}
+
 	public String getPdate() {
 		return pdate;
 	}
+
 	public void setPdate(String pdate) {
 		this.pdate = pdate;
 	}
+
 	public Integer getStatus() {
 		return status;
 	}
+
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+
 	public double getPrice() {
 		return price;
 	}
+
 	public void setPrice(double price) {
 		this.price = price;
 	}
+
 	public String getTano() {
 		return tano;
 	}
+
 	public void setTano(String tano) {
 		this.tano = tano;
 	}
+
 	public String getMno() {
 		return mno;
 	}
+
 	public void setMno(String mno) {
 		this.mno = mno;
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
+		result = prime * result + ((fname == null) ? 0 : fname.hashCode());
 		result = prime * result + ((mno == null) ? 0 : mno.hashCode());
 		result = prime * result + ((odate == null) ? 0 : odate.hashCode());
 		result = prime * result + ((ono == null) ? 0 : ono.hashCode());
@@ -69,6 +104,7 @@ public class OrderInfo implements Serializable{
 		result = prime * result + ((tano == null) ? 0 : tano.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -78,6 +114,16 @@ public class OrderInfo implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		OrderInfo other = (OrderInfo) obj;
+		if (amount == null) {
+			if (other.amount != null)
+				return false;
+		} else if (!amount.equals(other.amount))
+			return false;
+		if (fname == null) {
+			if (other.fname != null)
+				return false;
+		} else if (!fname.equals(other.fname))
+			return false;
 		if (mno == null) {
 			if (other.mno != null)
 				return false;
@@ -112,12 +158,9 @@ public class OrderInfo implements Serializable{
 			return false;
 		return true;
 	}
-	@Override
-	public String toString() {
-		return "OrderInfo [ono=" + ono + ", odate=" + odate + ", pdate=" + pdate + ", status=" + status + ", price="
-				+ price + ", tano=" + tano + ", mno=" + mno + "]";
-	}
-	public OrderInfo(String ono, String odate, String pdate, Integer status, double price, String tano, String mno) {
+
+	public OrderInfo(String ono, String odate, String pdate, Integer status, double price, String tano, String mno,
+			String fname, String amount) {
 		super();
 		this.ono = ono;
 		this.odate = odate;
@@ -126,11 +169,19 @@ public class OrderInfo implements Serializable{
 		this.price = price;
 		this.tano = tano;
 		this.mno = mno;
+		this.fname = fname;
+		this.amount = amount;
 	}
+
+	@Override
+	public String toString() {
+		return "OrderInfo [ono=" + ono + ", odate=" + odate + ", pdate=" + pdate + ", status=" + status + ", price="
+				+ price + ", tano=" + tano + ", mno=" + mno + ", fname=" + fname + ", amount=" + amount + "]";
+	}
+
 	public OrderInfo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
 }

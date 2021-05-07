@@ -20,10 +20,11 @@ function checkLogin() {
 		return;
 	}
 
-	$.post("../admin",{op:"login",aname:account,pwd:pwd},data=>{
-		data = parseInt($.trim(data));
-		if(data == 200){
-			location.href="manager/index.html";
+	$.post("../admin",{op:"login",aname:account,pwd:pwd},result=>{
+		if(result == 200){
+			location.href="manager/super.html";
+		}else if(result == 201){
+			location.href="manager/normal.html";
 		}else{
 			alert("账号或密码错误...");
 		}
@@ -47,7 +48,7 @@ function checkLogin() {
 			<div id="login_form">
 				<form action="index.html" method="post" id="myform">
 					<div id="login_tip">
-						用户登录&nbsp;&nbsp;UserLogin
+						管理员登录&nbsp;&nbsp;UserLogin
 					</div>
 					<div><input type="text" class="username" id="account" placeholder="请输入账号..."></div>
 					<div><input type="password" class="pwd" id="pwd" placeholder="请输入密码..."></div>

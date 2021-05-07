@@ -68,7 +68,7 @@ CREATE TABLE `memberinfo` (
   `nickName` varchar(100) COLLATE utf8_bin NOT NULL,
   `realName` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   `pwd` varchar(100) COLLATE utf8_bin NOT NULL,
-  `tel` varchar(15) COLLATE utf8_bin NOT NULL,
+  `email` varchar(100) COLLATE utf8_bin NOT NULL,
   `regDate` datetime DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`mno`),

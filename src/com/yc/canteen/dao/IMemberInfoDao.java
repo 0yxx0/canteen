@@ -16,4 +16,6 @@ public interface IMemberInfoDao {
 
 	public int change(String pwd);
 
+	List<MemberInfo> findAll();
+
 }

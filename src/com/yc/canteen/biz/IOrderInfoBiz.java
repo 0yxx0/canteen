@@ -9,9 +9,8 @@ public interface IOrderInfoBiz {
 
 	List<Map<String, String>> finds(String mno);
 
-	int add(String cnos, double price,String mno);
+	int add(String cnos, double price, String mno);
 
-	public Map<String, Object> week();
-
+	public List<OrderInfo> all();
 
 }

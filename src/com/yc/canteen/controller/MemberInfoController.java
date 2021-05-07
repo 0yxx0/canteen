@@ -19,47 +19,55 @@ import com.yc.canteen.util.SessionKey;
 public class MemberInfoController extends BasicServlet {
 	private static final long serialVersionUID = 2524015900753870596L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		
-		String op =request.getParameter("op");
-		
-		if("login".equals(op)){
+
+		String op = request.getParameter("op");
+
+		if ("login".equals(op)) {
 			login(request, response);
-		}else if("info".equals(op)) {
+		} else if ("info".equals(op)) {
 			info(request, response);
-		}else if("finds".equals(op)) {
+		} else if ("finds".equals(op)) {
 			finds(request, response);
-		}else if("reg".equals(op)) {
+		} else if ("reg".equals(op)) {
 			reg(request, response);
-		}else if("change".equals(op)) {
+		} else if ("change".equals(op)) {
 			change(request, response);
+		} else if ("findAll".equals(op)) {
+			findAll(request, response);
 		}
-}
+	}
+
+	private void findAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		IMemberInfoBiz memberInfoBiz = new MemberInfoBizImpl();
+		this.send(response, memberInfoBiz.findAll());
+	}
 
 	private void change(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        MemberInfo mf = RequestParamUtil.getParams(MemberInfo.class,request);
-        
-        String pwd = mf.getPwd();
-        
+		MemberInfo mf = RequestParamUtil.getParams(MemberInfo.class, request);
+
+		String pwd = mf.getPwd();
+
 		IMemberInfoBiz memberInfoBiz = new MemberInfoBizImpl();
 		this.send(response, memberInfoBiz.change(pwd));
 	}
 
 	private void reg(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        MemberInfo mf = RequestParamUtil.getParams(MemberInfo.class,request);
-        
-		String mno = UUID.randomUUID().toString().replace("-","");
+		MemberInfo mf = RequestParamUtil.getParams(MemberInfo.class, request);
+
+		String mno = UUID.randomUUID().toString().replace("-", "");
 
 		mf.setMno(mno);
 		HttpSession session = request.getSession();
-		session.setAttribute(SessionKey.CURRENTLOGINUSER,mf);
-		session.setAttribute("CURRENTLOGINUSER",mf);
+		session.setAttribute(SessionKey.CURRENTLOGINUSER, mf);
+		session.setAttribute("CURRENTLOGINUSER", mf);
 		IMemberInfoBiz memberInfoBiz = new MemberInfoBizImpl();
 
 		this.send(response, memberInfoBiz.reg(mf));
-		
+
 	}
 
 	private void finds(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -72,25 +80,25 @@ public class MemberInfoController extends BasicServlet {
 
 		Object obj = session.getAttribute("CURRENTLOGINUSER");
 
-		if(obj == null) {
+		if (obj == null) {
 			this.send(response, 500, "", null);
 			return;
 		}
 		this.send(response, 200, "", obj);
-		
+
 	}
 
 	private void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        MemberInfo mf = RequestParamUtil.getParams(MemberInfo.class,request);
-		
+		MemberInfo mf = RequestParamUtil.getParams(MemberInfo.class, request);
+
 		IMemberInfoBiz memberInfoBiz = new MemberInfoBizImpl();
 		mf = memberInfoBiz.login(mf);
-		if(mf==null) {
+		if (mf == null) {
 			this.send(response, 500, "", null);
-		}else {
+		} else {
 			HttpSession session = request.getSession();
-			session.setAttribute(SessionKey.CURRENTLOGINUSER,mf);
-			session.setAttribute("CURRENTLOGINUSER",mf);
+			session.setAttribute(SessionKey.CURRENTLOGINUSER, mf);
+			session.setAttribute("CURRENTLOGINUSER", mf);
 			this.send(response, 200, "", null);
 		}
 	}

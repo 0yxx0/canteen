@@ -16,79 +16,85 @@ import com.yc.canteen.biz.impl.FoodsBizImpl;
 import com.yc.canteen.entity.FoodsInfo;
 import com.yc.canteen.util.FileUploadUtil;
 
-
-
 @WebServlet("/foods")
-public class FoodsController extends BasicServlet{
+public class FoodsController extends BasicServlet {
 	private static final long serialVersionUID = 7272032383900864487L;
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
-		
+
 		String op = request.getParameter("op");
-		
-		
-		if("upload".equals(op)) {
+
+		if ("upload".equals(op)) {
 			upload(request, response);
-		} else if("add".equals(op)) {
+		} else if ("add".equals(op)) {
 			add(request, response);
-		} else if("findf".equals(op)) {
+		} else if ("findf".equals(op)) {
 			findf(request, response);
-		} else if("finds".equals(op)) {
+		} else if ("finds".equals(op)) {
 			finds(request, response);
-		} else if("findTid".equals(op)) {
+		} else if ("findTid".equals(op)) {
 			findTid(request, response);
-		} else if("findByNid".equals(op)) {
+		} else if ("findByNid".equals(op)) {
 			findByNid(request, response);
-		} else if("findIndex".equals(op)) {
+		} else if ("findIndex".equals(op)) {
 			findIndex(request, response);
-		} else if("findByCondition".equals(op)) {
+		} else if ("findByCondition".equals(op)) {
 			findByCondition(request, response);
-		} else if("findByFno".equals(op)) {
+		} else if ("findByFno".equals(op)) {
 			findByFno(request, response);
-		} else if("findHot".equals(op)) {
+		} else if ("findHot".equals(op)) {
 			findHot(request, response);
+		} else if ("findFood".equals(op)) {
+			findFood(request, response);
 		}
 	}
-	
-    private void findHot(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    	  IFoodsBiz foodsBiz = new FoodsBizImpl();
-	      this.send(response, 200, "", foodsBiz.findHot());
-		
+
+	private void findHot(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		IFoodsBiz foodsBiz = new FoodsBizImpl();
+		this.send(response, 200, "", foodsBiz.findHot());
+
 	}
 
 	private void findByFno(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String fno =  request.getParameter("fno");
-        IFoodsBiz foodsInfoBiz = new FoodsBizImpl();
-        this.send(response, 200, "", foodsInfoBiz.findByFno(fno));
+		String fno = request.getParameter("fno");
+		IFoodsBiz foodsInfoBiz = new FoodsBizImpl();
+		this.send(response, 200, "", foodsInfoBiz.findByFno(fno));
 
-		
 	}
 
 	private void findByCondition(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    	int page = Integer.parseInt(request.getParameter("page"));
+		int page = Integer.parseInt(request.getParameter("page"));
 		int rows = Integer.parseInt(request.getParameter("rows"));
-        String tno =  request.getParameter("tno");
-        String fname = request.getParameter("fname");
-        IFoodsBiz foodsInfoBiz = new FoodsBizImpl();
-        this.send(response, foodsInfoBiz.findByCondition(tno, fname, page, rows));
-		
+		String tno = request.getParameter("tno");
+		String fname = request.getParameter("fname");
+		IFoodsBiz foodsInfoBiz = new FoodsBizImpl();
+		this.send(response, foodsInfoBiz.findByCondition(tno, fname, page, rows));
+
 	}
 
-	//首页查询商品信息
+	// 首页查询商品信息
 	private void findIndex(HttpServletRequest request, HttpServletResponse response) throws IOException {
-	      IFoodsBiz foodsBiz = new FoodsBizImpl();
-	      this.send(response, 200, "", foodsBiz.findIndex());
-		
+		IFoodsBiz foodsBiz = new FoodsBizImpl();
+		this.send(response, 200, "", foodsBiz.findIndex());
+
+	}
+
+	// 后台报表页面查询商品信息
+	private void findFood(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		IFoodsBiz foodsBiz = new FoodsBizImpl();
+		this.send(response, 200, "", foodsBiz.findFood());
+
 	}
 
 	private void findByNid(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String nid = request.getParameter("nid");
 		IFoodsBiz newsBiz = new FoodsBizImpl();
 		this.send(response, newsBiz.findByNid(nid));
-		
+
 	}
 
 	private void findTid(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -96,54 +102,56 @@ public class FoodsController extends BasicServlet{
 		this.send(response, newsBiz.find());
 	}
 
-	//view_foods页面查询商品信息
+	// view_foods页面查询商品信息
 	private void finds(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		int page = Integer.parseInt(request.getParameter("page"));
 		int rows = Integer.parseInt(request.getParameter("rows"));
-		
+
 		IFoodsBiz newsBiz = new FoodsBizImpl();
 		this.send(response, newsBiz.findByPage(page, rows));
-		
+
 	}
 
 	private void findf(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String tid = request.getParameter("tid");
 		int page = Integer.parseInt(request.getParameter("page"));
 		int rows = Integer.parseInt(request.getParameter("rows"));
-		
+
 		IFoodsBiz newsBiz = new FoodsBizImpl();
 		this.send(response, newsBiz.findByTid(tid, page, rows));
-		
+
 	}
 
 	private void add(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		FileUploadUtil fuu = new FileUploadUtil();
-		PageContext pagecontext = JspFactory.getDefaultFactory().getPageContext(this, request, response, null, true, 2048, true);
+		PageContext pagecontext = JspFactory.getDefaultFactory().getPageContext(this, request, response, null, true,
+				2048, true);
 		int result = -1;
 		try {
 			FoodsInfo news = fuu.upload(FoodsInfo.class, pagecontext);
 			System.out.println(news);
 			IFoodsBiz newsBiz = new FoodsBizImpl();
 			result = newsBiz.add(news);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		this.send(response, result);
 	}
 
 	private void upload(HttpServletRequest request, HttpServletResponse response) throws IOException {
-			FileUploadUtil fuu = new FileUploadUtil();
-			PageContext pagecontext = JspFactory.getDefaultFactory().getPageContext(this, request, response, null, true, 2048, true);
-		    Map<String, Object> result = new HashMap<String, Object>();
-		    try {
-		    	Map<String, String> map = fuu.uploadPic(pagecontext);
-		    	
-		    	result.put("fileName", map.get("fileName"));
-		    	result.put("url", "../../" + map.getOrDefault("upload", ""));
-		    	result.put("uploaded", 1);
-		    } catch(Exception e) {
-		    	e.printStackTrace();
-		    }
-		    this.send(response, result);
-	} 
+		FileUploadUtil fuu = new FileUploadUtil();
+		PageContext pagecontext = JspFactory.getDefaultFactory().getPageContext(this, request, response, null, true,
+				2048, true);
+		Map<String, Object> result = new HashMap<String, Object>();
+		try {
+			Map<String, String> map = fuu.uploadPic(pagecontext);
+
+			result.put("fileName", map.get("fileName"));
+			result.put("url", "../../" + map.getOrDefault("upload", ""));
+			result.put("uploaded", 1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		this.send(response, result);
+	}
 }

@@ -16,4 +16,6 @@ public interface IMemberInfoBiz {
 
 	public int change(String pwd);
 
+	public List<MemberInfo> findAll();
+
 }
