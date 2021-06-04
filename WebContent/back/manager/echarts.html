@@ -8,19 +8,19 @@
 <div style="text-align: center;width: 100%;margin-bottom: 30px;margin-top: 30px;">
     菜品：<select id="fname">
     </select>
-    <label><input type="radio"  name="mdate" value="1" >按月查看销售额变化
+    <label><input type="radio"  name="style" value="1" >按月查看销售额变化
     </label>
-    <label ><input type="radio" name="mdate" value="0" checked >查看累计销售额对比</label>
+    <label ><input type="radio" name="style" value="0" checked >查看累计销售额对比</label>
     <button onclick="refresh()">统计</button>
 </div>
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="amount" style="width: 1000px;height:400px;margin-left:200px;"></div>
+    <div id="amount" style="width: 1300px;height:400px;margin-left:50px;"></div>
 <script type="text/javascript">
     searchFood();
     all();
     function searchFood(){
     	 $.post("../../foods", {op:"findFood"}, function(result){
-             let str = " <option value='0'>全部</option>";
+             let str = " <option value='0'>请选择下列菜品</option>";
              $.each(result.data, function(index, item){
      			str +="<option value='" + item.fno + "'>" + item.fname + "</option>";
              });
@@ -30,10 +30,49 @@
     
     var amount = echarts.init(document.getElementById('amount'));
     
+    //查询历史总销售额
     function all(){
     	$.post("../../order",{op:"all"},function(data){
            amount.setOption(getAmountBarOption(data,"food"));
     	},"json");
+    }
+    
+    //按月查询销售额变化
+    function month(){
+    	var fno = $.trim($("#fname").val());
+    	
+    	$.post("../../order",{op:"month",fno:fno},function(data){
+            amount.setOption(getLineOption(data,"food"));
+     	},"json");    	
+    }
+    
+    function getLineOption(data) {
+    	var length= data.data.length;
+        var opData = [];
+        var xdata = [];
+        var fname =  $.trim($("#fname option:selected").text());
+        for(i=0;i<length;i++){
+        	opData[i]=data.data[i].amount;
+        	xdata[i]=data.data[i].month;
+        }
+        var legend ;
+        option = {
+            title: {
+                text: fname + '销售额变化',
+            },
+            tooltip: {},
+            legend: legend,
+            xAxis: {
+                data: xdata
+            },
+            yAxis: {},
+            series: [{
+                name: '销售额',
+                type: 'line',
+                data: opData
+            }]
+        };
+        return option;
     }
     function getAmountBarOption(data) {
     	var length= data.data.length;
@@ -92,6 +131,16 @@
 
         }
     }
+  
+  function refresh(){
+      let assignStyle =  $("input[name='style']:checked").val()=="1" ? true:false;
+      
+      if(assignStyle){
+    	  month();
+      }else{
+    	  all();
+      }
+  }
 </script>
  
 </body>

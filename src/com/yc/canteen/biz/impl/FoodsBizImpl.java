@@ -103,4 +103,19 @@ public class FoodsBizImpl implements IFoodsBiz {
 		map.put("rows", foodsInfoDao.findByTno(tno, page, rows));
 		return map;
 	}
+
+	@Override
+	public List<FoodsInfo> findAll() {
+		IFoodsInfoDao foodsInfoDao = new FoodsInfoDaoImpl();
+		return foodsInfoDao.findAll();
+	}
+
+	@Override
+	public int update(FoodsInfo f) {
+		if (StringUtil.checkNull(f.getTno())) {
+			return -1;
+		}
+		IFoodsInfoDao foodsInfoDao = new FoodsInfoDaoImpl();
+		return foodsInfoDao.update(f);
+	}
 }

@@ -30,4 +30,7 @@ public interface IFoodsBiz {
 
 	public Map<String, Object> findHot();
 
+	public List<FoodsInfo> findAll();
+
+	public int update(FoodsInfo f);
 }

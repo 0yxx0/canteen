@@ -1,6 +1,7 @@
 package com.yc.canteen.controller;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -85,6 +86,10 @@ public class AdminInfoController extends BasicServlet {
 
 	private void reg(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		AdminInfo af = RequestParamUtil.getParams(AdminInfo.class, request);
+
+		String aid = UUID.randomUUID().toString().replace("-", "");
+
+		af.setAid(aid);
 
 		IAdminInfoBiz adminInfoBiz = new AdminInfoBizImpl();
 		this.send(response, adminInfoBiz.reg(af));

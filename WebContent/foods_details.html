@@ -35,10 +35,7 @@
        <div class="sec_logo">
          <a href="index.html"> <img src="images/主页1.png" /></a> 
        </div>
-       <div class="sec_search">
-          <input type="text" class="sec_search_text" />
-          <button class="sec_search_btn"></button>
-       </div>
+ 
     </div>
 <div id="foods">
     <div class="dt_main">
@@ -60,6 +57,9 @@
                  <label>数量:<input type="number" class="ipt_num" id="number" value="" v-model="nums"/></label>
                  <label class="nums_warn" id="nums_warn"></label>
            </div>
+           <div class="">
+                <label>介绍:<em>{{intro}}</em></label>
+            </div>
             <div class="dt_amount">
                 <label>总价:<em>{{foods.price * nums}}</em></label>
             </div>
@@ -88,7 +88,8 @@ let vm = new Vue({
 	data: {
 		foods: [],
 		pics:[],
-		nums:1
+		nums:1,
+		intro:""
 	},
 	methods: {
 		addCart:function(){
@@ -140,7 +141,9 @@ let vm = new Vue({
 		axios.all([getFoodsByFno()]).then(axios.spread((result) =>{
 			this.foods = result.data.data;
 			this.pics = result.data.data.pics.split(";");
-			
+			this.intro = result.data.data.intro.replace("<p>","");
+			this.intro = this.intro.replace("</p>","");
+			console.log(this.intro);
 			this.$nextTick(function(){
 				showPics();
 			})

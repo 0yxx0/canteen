@@ -14,8 +14,8 @@ public interface IMemberInfoDao {
 
 	public MemberInfo find(MemberInfo mf);
 
-	public int change(String pwd);
-
 	List<MemberInfo> findAll();
+
+	public int change(MemberInfo m);
 
 }

@@ -52,7 +52,7 @@ var types_obj = $('#types_data').datagrid({
 				
 				var row = types_obj.datagrid("getSelected");
 				if( row == null){
-					$.messager.show({title:'温馨提示',msg: '请选择您要修改的商品类型信息...', timeout:2000, showType:'slide'});
+					$.messager.show({title:'温馨提示',msg: '请选择您要修改的菜品类型信息...', timeout:2000, showType:'slide'});
 					return;
 				}
 				
@@ -70,6 +70,12 @@ var types_obj = $('#types_data').datagrid({
 				
 				types_obj.datagrid("endEdit", types_editRow);
 				
+				if(types_obj.datagrid("getChanges")[0] == null){
+					row = null;
+					types_editRow = undefined;
+					return;
+				}
+				
 				var row = types_obj.datagrid("getChanges")[0];
 				
 				row["op"] = types_op;
@@ -77,14 +83,16 @@ var types_obj = $('#types_data').datagrid({
 				$.post("../../types", row, function(data){
 					data = parseInt($.trim(data));
 					if (data>0){
-						$.messager.show({title:'成功提示',msg: types_flag + '商品类型成功...', timeout:2000, showType:'slide'});
+						$.messager.show({title:'成功提示',msg: types_flag + '菜品类型成功...', timeout:2000, showType:'slide'});
+						$('#types_data').datagrid('reload');
 					}else{
-						$.messager.show('失败提示', types_flag + '商品类型失败...', 'error');
+						$.messager.show('失败提示', types_flag + '菜品类型失败...', 'error');
+						$('#types_data').datagrid('reload');
 					}
 					row = null;
 					types_editRow = undefined;
 				}, "text");
-				$('#types_data').datagrid('reload');
+
 			}
 		},'-',{
 			text:"删除",
@@ -96,7 +104,7 @@ var types_obj = $('#types_data').datagrid({
 				
 				var row = types_obj.datagrid("getSelected");
 				if( row == null){
-					$.messager.show({title:'温馨提示',msg: '请选择您要修改的商品类型信息', timeout:2000, showType:'slide'});
+					$.messager.show({title:'温馨提示',msg: '请选择您要删除的菜品类型信息', timeout:2000, showType:'slide'});
 					return
 				}
 				
@@ -107,10 +115,10 @@ var types_obj = $('#types_data').datagrid({
 					
 					$.post("../../types", {op:"delete", tno:row.tno}, data=>{
 						if(data > 0){
-					       $.messager.show({title:'成功提示',msg: types_flag +'商品类型删除成功', timeout:2000, showType:'slide'});	
+					       $.messager.show({title:'成功提示',msg: types_flag +'菜品类型删除成功', timeout:2000, showType:'slide'});	
 					       types_obj.datagrid("reload");
 						} else{
-							$.messager.alert('失败提示', '商品类型删除失败...', 'error');
+							$.messager.alert('失败提示', '菜品类型删除失败...', 'error');
 						}
 						row = null;
 					})

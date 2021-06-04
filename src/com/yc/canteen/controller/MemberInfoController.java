@@ -47,12 +47,10 @@ public class MemberInfoController extends BasicServlet {
 	}
 
 	private void change(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		MemberInfo mf = RequestParamUtil.getParams(MemberInfo.class, request);
-
-		String pwd = mf.getPwd();
+		MemberInfo info = RequestParamUtil.getParams(MemberInfo.class, request);
 
 		IMemberInfoBiz memberInfoBiz = new MemberInfoBizImpl();
-		this.send(response, memberInfoBiz.change(pwd));
+		this.send(response, memberInfoBiz.change(info));
 	}
 
 	private void reg(HttpServletRequest request, HttpServletResponse response) throws IOException {

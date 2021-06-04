@@ -34,7 +34,15 @@ public class OrderInfoController extends BasicServlet {
 			find(request, response);
 		} else if ("all".equals(op)) {
 			all(request, response);
+		} else if ("month".equals(op)) {
+			month(request, response);
 		}
+	}
+
+	private void month(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		IOrderInfoBiz orderInfoBiz = new OrderInfoBizImpl();
+		String fno = request.getParameter("fno");
+		this.send(response, 200, "", orderInfoBiz.month(fno));
 	}
 
 	private void all(HttpServletRequest request, HttpServletResponse response) throws IOException {

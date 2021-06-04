@@ -32,7 +32,14 @@ public class OrderInfoBizImpl implements IOrderInfoBiz {
 		List<OrderInfo> listOrder;
 		IOrderInfoDao orderInfoDao = new OrderInfoDaoImpl();
 		listOrder = orderInfoDao.all();
-		System.out.println(listOrder);
+		return listOrder;
+	}
+
+	@Override
+	public List<Map<String, String>> month(String fno) {
+		List<Map<String, String>> listOrder;
+		IOrderInfoDao orderInfoDao = new OrderInfoDaoImpl();
+		listOrder = orderInfoDao.month(fno);
 		return listOrder;
 	}
 }

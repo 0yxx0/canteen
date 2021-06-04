@@ -82,4 +82,11 @@ public class OrderInfoDaoImpl implements IOrderInfoDao {
 				+ " where f.fno=oi.fno and f.status = 1 group by fname";
 		return db.finds(OrderInfo.class, sql);
 	}
+
+	@Override
+	public List<Map<String, String>> month(String fno) {
+		DBHelper db = new DBHelper();
+		String sql = "select DATE_FORMAT(odate, \"%Y-%m\" ) as month,sum(o.price) as amount from orderinfo o,orderiteminfo ot where o.ono=ot.ono and ot.fno=? group by month";
+		return db.gets(sql, fno);
+	}
 }

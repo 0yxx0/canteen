@@ -11,6 +11,33 @@ import com.yc.canteen.util.StringUtil;
 public class FoodsInfoDaoImpl implements IFoodsInfoDao {
 
 	@Override
+	public List<FoodsInfo> findAll() {
+		DBHelper db = new DBHelper();
+		String sql = "select * from foodsinfo ";
+		return db.finds(FoodsInfo.class, sql);
+	}
+
+	@Override
+	public int update(FoodsInfo f) {
+		DBHelper db = new DBHelper();
+		List<Object> params = new ArrayList<Object>();
+		String sql = "update foodsinfo set ";
+		if (!StringUtil.checkNull(f.getFname())) {
+			sql += "fname=?,";
+			params.add(f.getFname());
+		}
+
+		if (f.getStatus() != -1) {
+			sql += "status=?,";
+			params.add(f.getStatus());
+		}
+
+		sql = sql.substring(0, sql.lastIndexOf(",")) + " where fno=?";
+		params.add(f.getFno());
+		return db.update(sql, params);
+	}
+
+	@Override
 	public int add(FoodsInfo foods) {
 		DBHelper db = new DBHelper();
 		String sql = "insert into foodsinfo values(0, ?, ?, ?, ?, ?, 1, 0)";

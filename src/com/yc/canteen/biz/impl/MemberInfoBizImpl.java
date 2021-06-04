@@ -46,12 +46,12 @@ public class MemberInfoBizImpl implements IMemberInfoBiz {
 	}
 
 	@Override
-	public int change(String pwd) {
-		if (StringUtil.checkNull(pwd)) {
+	public int change(MemberInfo m) {
+		if (StringUtil.checkNull(m.getMno())) {
 			return -1;
 		}
 		IMemberInfoDao memberInfoDao = new MemberInfoDaoImpl();
-		return memberInfoDao.change(pwd);
+		return memberInfoDao.change(m);
 	}
 
 	@Override

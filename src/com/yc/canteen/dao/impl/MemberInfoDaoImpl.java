@@ -1,10 +1,12 @@
 package com.yc.canteen.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.yc.canteen.dao.DBHelper;
 import com.yc.canteen.dao.IMemberInfoDao;
 import com.yc.canteen.entity.MemberInfo;
+import com.yc.canteen.util.StringUtil;
 
 public class MemberInfoDaoImpl implements IMemberInfoDao {
 
@@ -18,7 +20,7 @@ public class MemberInfoDaoImpl implements IMemberInfoDao {
 	@Override
 	public List<MemberInfo> findAll() {
 		DBHelper db = new DBHelper();
-		String sql = "select * from memberinfo";
+		String sql = "select mno, nickName, pwd, email, status from memberinfo";
 		return db.finds(MemberInfo.class, sql);
 	}
 
@@ -44,9 +46,23 @@ public class MemberInfoDaoImpl implements IMemberInfoDao {
 	}
 
 	@Override
-	public int change(String pwd) {
+	public int change(MemberInfo m) {
 		DBHelper db = new DBHelper();
-		String sql = "update memberinfo set pwd=? where pwd=777777";
-		return db.update(sql, pwd);
+		List<Object> params = new ArrayList<Object>();
+		String sql = "update memberinfo set ";
+
+		if (!StringUtil.checkNull(m.getNickName())) {
+			sql += "nickName=?,";
+			params.add(m.getNickName());
+		}
+
+		if (m.getStatus() != -1) {
+			sql += "status=?,";
+			params.add(m.getStatus());
+		}
+
+		sql = sql.substring(0, sql.lastIndexOf(",")) + " where mno=?";
+		params.add(m.getMno());
+		return db.update(sql, params);
 	}
 }

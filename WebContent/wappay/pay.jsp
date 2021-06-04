@@ -254,10 +254,13 @@ if(request.getParameter("WIDout_trade_no")!=null){
 		</div>
 	</div>
 </body>
+<script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+<script src="../js/jquery.params.js"></script>
 <script language="javascript">
 	function GetDateNow() {
 		var vNow = new Date();
 		var sNow = "";
+		var amount=$.query.get("amount");
 		sNow += String(vNow.getFullYear());
 		sNow += String(vNow.getMonth() + 1);
 		sNow += String(vNow.getDate());
@@ -266,9 +269,9 @@ if(request.getParameter("WIDout_trade_no")!=null){
 		sNow += String(vNow.getSeconds());
 		sNow += String(vNow.getMilliseconds());
 		document.getElementById("WIDout_trade_no").value =  sNow;
-		document.getElementById("WIDsubject").value = "手机网站支付测试商品";
-		document.getElementById("WIDtotal_amount").value = "76";
-        document.getElementById("WIDbody").value = "购买测试商品76元";
+		document.getElementById("WIDsubject").value = "一家餐厅下单付款";
+		document.getElementById("WIDtotal_amount").value =  amount;
+        document.getElementById("WIDbody").value = "菜品下单";
 	}
 	GetDateNow();
 </script>

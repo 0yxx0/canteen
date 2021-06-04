@@ -1,7 +1,7 @@
 <table id="admin_data" data-options="fit:true"></table>
 
 <script>
-var statusObj = [{aid:0, aname:"冻结"}, {aid:1, aname:"普通管理员"}, {aid:2, aname:"超级管理员"}];
+var statusObj = [{aid:0, aname:"冻结"}, {aid:1, aname:"解冻"}];
 var types_editRow = undefined;
 var types_op;
 var types_flag;
@@ -26,10 +26,6 @@ var types_obj = $('#admin_data').datagrid({
 				return "已冻结";
 			} else if(val == 1){
 				return "普通管理员";
-			}else if(val == 2){
-				return "超级管理员";
-			}else if(val ==3 ){
-				return "店家";
 			}
 		}, editor:{type: "combobox", options:{required: true, valueField:"aid", textField:"aname", data:statusObj}}}
 	]],

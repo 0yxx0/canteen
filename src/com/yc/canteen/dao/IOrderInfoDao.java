@@ -13,4 +13,6 @@ public interface IOrderInfoDao {
 
 	List<OrderInfo> all();
 
+	List<Map<String, String>> month(String fno);
+
 }

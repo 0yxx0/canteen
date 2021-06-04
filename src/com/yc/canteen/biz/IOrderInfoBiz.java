@@ -13,4 +13,6 @@ public interface IOrderInfoBiz {
 
 	public List<OrderInfo> all();
 
+	public List<Map<String, String>> month(String fno);
+
 }

@@ -27,4 +27,8 @@ public interface IFoodsInfoDao {
 	public List<FoodsInfo> findByTno(String tno, int page, int rows);
 
 	public int total(String tno);
+
+	public int update(FoodsInfo f);
+
+	public List<FoodsInfo> findAll();
 }

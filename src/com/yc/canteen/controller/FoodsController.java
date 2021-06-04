@@ -15,6 +15,7 @@ import com.yc.canteen.biz.IFoodsBiz;
 import com.yc.canteen.biz.impl.FoodsBizImpl;
 import com.yc.canteen.entity.FoodsInfo;
 import com.yc.canteen.util.FileUploadUtil;
+import com.yc.canteen.util.RequestParamUtil;
 
 @WebServlet("/foods")
 public class FoodsController extends BasicServlet {
@@ -50,7 +51,23 @@ public class FoodsController extends BasicServlet {
 			findHot(request, response);
 		} else if ("findFood".equals(op)) {
 			findFood(request, response);
+		} else if ("findAll".equals(op)) {
+			findAll(request, response);
+		} else if ("update".equals(op)) {
+			update(request, response);
 		}
+	}
+
+	private void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		FoodsInfo info = RequestParamUtil.getParams(FoodsInfo.class, request);
+
+		IFoodsBiz foodsBiz = new FoodsBizImpl();
+		this.send(response, foodsBiz.update(info));
+	}
+
+	private void findAll(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		IFoodsBiz foodsBiz = new FoodsBizImpl();
+		this.send(response, 200, "", foodsBiz.findAll());
 	}
 
 	private void findHot(HttpServletRequest request, HttpServletResponse response) throws IOException {

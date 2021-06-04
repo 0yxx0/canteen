@@ -14,22 +14,7 @@ public class OrderInfo implements Serializable {
 	private String mno;
 	private String fname;
 	private String amount;
-
-	public String getFname() {
-		return fname;
-	}
-
-	public void setFname(String fname) {
-		this.fname = fname;
-	}
-
-	public String getAmount() {
-		return amount;
-	}
-
-	public void setAmount(String amount) {
-		this.amount = amount;
-	}
+	private String month;
 
 	public String getOno() {
 		return ono;
@@ -87,6 +72,30 @@ public class OrderInfo implements Serializable {
 		this.mno = mno;
 	}
 
+	public String getFname() {
+		return fname;
+	}
+
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+
+	public String getAmount() {
+		return amount;
+	}
+
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -94,6 +103,7 @@ public class OrderInfo implements Serializable {
 		result = prime * result + ((amount == null) ? 0 : amount.hashCode());
 		result = prime * result + ((fname == null) ? 0 : fname.hashCode());
 		result = prime * result + ((mno == null) ? 0 : mno.hashCode());
+		result = prime * result + ((month == null) ? 0 : month.hashCode());
 		result = prime * result + ((odate == null) ? 0 : odate.hashCode());
 		result = prime * result + ((ono == null) ? 0 : ono.hashCode());
 		result = prime * result + ((pdate == null) ? 0 : pdate.hashCode());
@@ -129,6 +139,11 @@ public class OrderInfo implements Serializable {
 				return false;
 		} else if (!mno.equals(other.mno))
 			return false;
+		if (month == null) {
+			if (other.month != null)
+				return false;
+		} else if (!month.equals(other.month))
+			return false;
 		if (odate == null) {
 			if (other.odate != null)
 				return false;
@@ -159,8 +174,15 @@ public class OrderInfo implements Serializable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "OrderInfo [ono=" + ono + ", odate=" + odate + ", pdate=" + pdate + ", status=" + status + ", price="
+				+ price + ", tano=" + tano + ", mno=" + mno + ", fname=" + fname + ", amount=" + amount + ", month="
+				+ month + "]";
+	}
+
 	public OrderInfo(String ono, String odate, String pdate, Integer status, double price, String tano, String mno,
-			String fname, String amount) {
+			String fname, String amount, String month) {
 		super();
 		this.ono = ono;
 		this.odate = odate;
@@ -171,12 +193,7 @@ public class OrderInfo implements Serializable {
 		this.mno = mno;
 		this.fname = fname;
 		this.amount = amount;
-	}
-
-	@Override
-	public String toString() {
-		return "OrderInfo [ono=" + ono + ", odate=" + odate + ", pdate=" + pdate + ", status=" + status + ", price="
-				+ price + ", tano=" + tano + ", mno=" + mno + ", fname=" + fname + ", amount=" + amount + "]";
+		this.month = month;
 	}
 
 	public OrderInfo() {

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>源辰-添加菜品</title>
+<title>添加菜品</title>
 <link rel="shortcut icon" href="../../images/copylogo.png" type="image/x-icon" />
 <link rel="stylesheet" href="../css/common.css">
 <link rel="stylesheet" href="../css/main.css">
@@ -34,7 +34,7 @@
 						<tr>
 							<td class="td_right">图片：</td>
 							<td>
-								<input type="file" id="pic" name="pic" class="input-text lh30" size="40" multiple="multiple" onchange="setImagePreviews(this,'showPics')">
+								<input type="file" id="pics" name="pics" class="input-text lh30" size="40" multiple="multiple" onchange="setImagePreviews(this,'showPics')">
 							</td>
 							<td class="td_right">菜品价格：</td>
 							<td>
@@ -91,7 +91,7 @@ function addNewsInfo(){
 	$.ajaxFileUpload({
 		url:"../../foods?op=add",
 	    secureuri:false,
-	    fileElementId:"pic",
+	    fileElementId:"pics",
 	    dataType:"text",
 	    data:{tno:tno,fname:fname,price:price,intro:intro},
 	    success:function(data,status){
